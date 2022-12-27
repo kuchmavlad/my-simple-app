@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [How to Use the App](#how-to-use-the-app)
+* [Features](#features)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## General info
 
-## Available Scripts
+It is simple React application, created to skillup. The main technology for building the app was used react-router-dom v6.4. The application has a minimum of styles, the main styles were taken from the react-router-dom guide. App can receive data, modify, delete and add. Also app has simple authorization.
+	
+## Technologies
 
-In the project directory, you can run:
+Project is created with:
+* React-router-dom v6.4
+* Type script
+* Classnames
+* React Context
+* React-icons
+* Json-server
+* Abssoluting path
+	
+## Setup
 
-### `npm start`
+To run this project, install it locally using npm:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+$ npm install
+$ npm run server
+$ npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+
+## How to Use the App
+
+App is a multi-page site with authorization. Email is used as authorization(can use Sincere@april.biz or '1' for authorization).
+
+### Home page
+Simple page.
+
+### Posts page
+Get all posts.
+* Сan get the first 10 posts
+* Can add new post(required authorization)
+* Can click on the post and get the full details of the post.
+
+### User page(required authorization)
+Get all users.
+* Can search users
+* Can add new user
+* Can edit/remove user
+* Can choose favorite user
+
+## Tests
+
+In developing
+
+```
+$npm test
+```
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Add new post
+* Edit post
+* Albums page
+* Tests
+* Fix any type
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
