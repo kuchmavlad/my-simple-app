@@ -1,0 +1,28 @@
+#contact-form {
+  padding: 30px;
+}
+
+#contact-form .itemWrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+#contact-form .itemTitle {
+  width: 80px;
+}
+
+#contact-form input {
+  margin: 5px;
+}
+
+#contact-form p:last-child {
+    padding-left: 80px;
+}
+
+#contact-form p:last-child button {
+    margin: 5px;
+}
+
+#contact-form p:last-child button[type="button"] {
+    color: inherit;
+}

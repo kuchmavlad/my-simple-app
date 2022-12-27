@@ -1,0 +1,32 @@
+#logInOut {
+    position: absolute;
+    right: 15px;
+    display: flex;
+}
+
+#logInOut a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#logInOut a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#logInOut span:hover {
+    cursor: pointer;
+}
+
+#logInOut a:active, span:active svg {
+    color: var(--color-active);
+}
+
+#logInOut span svg {
+    color: #fff;
+    font-size: 20px;
+}
+
+#logInOut span:active svg {
+    color: var(--color-active);
+}

@@ -1,0 +1,17 @@
+header {
+    background-color: var(--color-bg);
+    padding: 2rem 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+header > nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 1rem;
+}
+header > nav a:hover {
+    text-decoration: underline;
+}
+

@@ -1,0 +1,17 @@
+#logOutModal {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  width: 200px;
+  background: #f7f7f7;
+  border: solid 1px #e3e3e3;
+  padding: 10px;
+}
+
+.userName {
+  font-weight: 700;
+}
+
+.userName, .userEmail {
+  padding-bottom: 10px;
+}

@@ -1,0 +1,16 @@
+.postsWrapper {
+    padding: 20px;
+}
+
+main.loading .postsWrapper {
+    opacity: .25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
+}
+
+.postsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+

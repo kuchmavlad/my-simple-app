@@ -1,0 +1,21 @@
+#favorite {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+#favorite button {
+  box-shadow: none;
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0;
+}
+
+#favorite button[value="true"] {
+  color: #a4a4a4;
+}
+
+#favorite button[value="true"]:hover,
+#favorite button[value="false"] {
+  color: #eeb004;
+}

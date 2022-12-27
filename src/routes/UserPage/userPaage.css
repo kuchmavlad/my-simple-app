@@ -1,0 +1,39 @@
+#contact {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+}
+
+#contact p {
+  margin: 5px 0;
+}
+
+#contact h1 {
+  text-align: left;
+}
+
+#contact img {
+  padding-right: 15px;
+}
+
+#contactButtons {
+  display: flex;
+}
+
+#contactButtons form {
+  padding: 5px;
+}
+
+#contactButtons {
+  margin-left: -5px;
+}
+
+form[action$="destroy"] button {
+  color: #f44250;
+}
+
+#contact h1 {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}

@@ -1,0 +1,16 @@
+.commentsWrapper {
+    background: #f7f7f7;
+    padding: 10px;
+}
+
+.commentsWrapper ul {
+    padding-left: 20px;
+}
+
+.commentItem {
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.commentItem:last-child {
+    border: none;
+}

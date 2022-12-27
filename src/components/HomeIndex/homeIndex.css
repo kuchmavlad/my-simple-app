@@ -1,0 +1,9 @@
+.homeWrapper {
+    padding: 20px 0;
+}
+
+main.loading .homeWrapper {
+    opacity: .25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
+}
