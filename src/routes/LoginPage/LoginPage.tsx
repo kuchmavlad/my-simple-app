@@ -29,6 +29,7 @@ export const LoginPage: React.FC = () => {
   useEffect(() => {
     const fromPage = location.state?.from?.pathname || "/";
     setFromPath(fromPage);
+    // eslint-disable-next-line
   }, []);
 
   return (
