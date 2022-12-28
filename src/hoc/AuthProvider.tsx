@@ -1,7 +1,8 @@
-import React, { createContext, ReactElement, useState } from "react";
+import React, { createContext, ReactElement } from "react";
 
 import { UserItem } from "dtos/UserItem";
 import { Nullable } from "dtos/globalTypes";
+import { useAsyncState } from "hooks/useAsyncState";
 
 interface AuthProviderProps {
   children: ReactElement;
@@ -22,15 +23,15 @@ const authInitialState: authInitialStateProps = {
 export const AuthContext = createContext(authInitialState);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<Nullable<UserItem>>(null);
+  const [user, setUser] = useAsyncState(null);
 
-  const signIn = (user: UserItem, cb: () => void) => {
-    setUser(user);
+  const signIn = async (user: UserItem, cb: () => void) => {
+    await setUser(user);
     cb();
   };
 
-  const signOut = (cb: () => void) => {
-    setUser(null);
+  const signOut = async (cb: () => void) => {
+    await setUser(null);
     cb();
   };
 

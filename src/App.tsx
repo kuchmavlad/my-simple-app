@@ -47,7 +47,11 @@ const router = createBrowserRouter([
       },
       {
         path: "posts/new",
-        element: <NewPostPage />,
+        element: (
+          <RequireAuth>
+            <NewPostPage />
+          </RequireAuth>
+        ),
       },
       {
         path: "users",
