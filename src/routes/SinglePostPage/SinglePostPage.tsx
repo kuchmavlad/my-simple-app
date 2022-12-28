@@ -6,7 +6,7 @@ import { PostComments } from "components/PostComents/PostComments";
 import { PostsItem } from "dtos/PostItem";
 import { CommentType } from "dtos/CommentType";
 
-import "./index.css";
+import "./singlePostPage.css";
 
 type SinglePostLoaderType = {
   post: PostsItem;

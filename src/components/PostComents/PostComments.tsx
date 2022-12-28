@@ -2,7 +2,7 @@ import React from "react";
 
 import { CommentType } from "dtos/CommentType";
 
-import "./index.css";
+import "./postComments.css";
 
 interface PostCommentsProps {
   comments: CommentType[];
