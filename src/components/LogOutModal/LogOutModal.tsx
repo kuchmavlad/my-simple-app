@@ -26,7 +26,10 @@ export const LogOutModal: React.FC<LogOutModalProps> = ({
 
   useEffect(() => {
     const closeModal = ({ path }: any) => {
-      if (path[0] !== btnRef.current?.firstElementChild) {
+      const svgPath = btnRef.current;
+      const svg = btnRef.current?.firstElementChild;
+      const span = btnRef.current?.firstElementChild?.firstElementChild;
+      if (path[0] !== svgPath && path[0] !== svg && path[0] !== span) {
         toggleModal(false);
       }
     };

@@ -15,7 +15,7 @@ export const PostComments: React.FC<PostCommentsProps> = ({ comments }) => {
       <div className="commentsWrapper">
         <ul>
           {comments.map(({ email, body, id }) => (
-            <li className="commentItem" id={String(id)}>
+            <li key={id} className="commentItem" id={String(id)}>
               <h5>{email}</h5>
               <p>{body}</p>
             </li>
