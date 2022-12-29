@@ -16,7 +16,6 @@ export const UserCreatePage: React.FC = () => {
             aria-label="Name"
             type="text"
             name="name"
-            // defaultValue={name}
             required
           />
           <input
@@ -24,7 +23,6 @@ export const UserCreatePage: React.FC = () => {
             aria-label="username"
             type="text"
             name="username"
-            // defaultValue={username}
             required
           />
         </div>
@@ -33,26 +31,14 @@ export const UserCreatePage: React.FC = () => {
       <div className="itemWrapper">
         <div className="itemTitle">Email:</div>
         <div>
-          <input
-            type="text"
-            name="email"
-            placeholder="Example@.com"
-            // defaultValue={email}
-            required
-          />
+          <input type="text" name="email" placeholder="Example@.com" required />
         </div>
       </div>
 
       <div className="itemWrapper">
         <div className="itemTitle">Phone:</div>
         <div>
-          <input
-            type="text"
-            name="phone"
-            placeholder="123-456-7890"
-            // defaultValue={phone}
-            required
-          />
+          <input type="text" name="phone" placeholder="123-456-7890" required />
         </div>
       </div>
 
@@ -63,7 +49,6 @@ export const UserCreatePage: React.FC = () => {
             type="text"
             name="website"
             placeholder="example.com"
-            // defaultValue={website}
             required
           />
         </div>
@@ -77,7 +62,6 @@ export const UserCreatePage: React.FC = () => {
               name="address.street"
               placeholder="Street"
               aria-label="Street"
-              // defaultValue={street}
               required
             />
             <input
@@ -85,7 +69,6 @@ export const UserCreatePage: React.FC = () => {
               name="address.suite"
               placeholder="Suite"
               aria-label="Suite"
-              // defaultValue={suite}
               required
             />
           </div>
@@ -95,7 +78,6 @@ export const UserCreatePage: React.FC = () => {
               name="address.city"
               placeholder="City"
               aria-label="City"
-              // defaultValue={city}
               required
             />
             <input
@@ -103,7 +85,6 @@ export const UserCreatePage: React.FC = () => {
               name="address.zipcode"
               placeholder="Zipcode"
               aria-label="Zipcode"
-              // defaultValue={zipcode}
               required
             />
           </div>
@@ -124,7 +105,7 @@ export const userCreateAction = async ({ request, params }: any) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
 
-  const newUser = { ...updates, id: params.id };
+  const newUser = { ...updates, id: +params.id };
 
   return fetch(`http://localhost:3001/users`, {
     method: "POST",

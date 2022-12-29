@@ -2,7 +2,7 @@ import React from "react";
 import { Form, useActionData, useLoaderData } from "react-router-dom";
 
 import { PostItem, PostsCheckbox } from "components";
-import { PostsItem } from "dtos/PostItem";
+import { PostsItem } from "dtos";
 
 import "./postPage.css";
 
