@@ -1,0 +1,18 @@
+#new-post {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#new-post > * {
+    margin: 10px 0;
+}
+
+#new-post button {
+    margin: 5px
+}
+
+#new-post button[type="button"] {
+    color: inherit;
+}

@@ -10,7 +10,7 @@ import {
   UsersPage,
   UserPage,
   UserEditPage,
-  NewPostPage,
+  PostActionsPage,
 } from "routes";
 
 import { loginAction, LoginPage } from "routes/LoginPage/LoginPage";
@@ -19,6 +19,10 @@ import { singPostLoader } from "routes/SinglePostPage/SinglePostPage";
 import { userAction, usersLoader } from "routes/UsersPage/UsersPage";
 import { createUserAction, userLoader } from "routes/UserPage/UserPage";
 import { userEditAction } from "routes/UserEditPage/UserEditPage";
+import {
+  newPosAction,
+  newPostLoader,
+} from "routes/PostActionsPage/PostActionsPage";
 import {
   userCreateAction,
   UserCreatePage,
@@ -49,9 +53,29 @@ const router = createBrowserRouter([
         path: "posts/new",
         element: (
           <RequireAuth>
-            <NewPostPage />
+            <PostActionsPage />
           </RequireAuth>
         ),
+        action: newPosAction,
+      },
+      {
+        path: "posts/:id/edit",
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: newPosAction,
+        loader: newPostLoader,
+      },
+      {
+        path: "posts/:id/destroy",
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: newPosAction,
       },
       {
         path: "users",
