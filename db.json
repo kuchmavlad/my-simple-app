@@ -4236,8 +4236,8 @@
       "favorite": true
     },
     {
-      "name": "1",
-      "username": "1",
+      "name": "Dev",
+      "username": "Dev",
       "email": "1",
       "phone": "1",
       "website": "1",
@@ -4247,8 +4247,8 @@
         "city": "1",
         "zipcode": "1"
       },
-      "id": "1670324440165",
-      "favorite": false
+      "id": 1672309727643,
+      "favorite": true
     }
   ]
 }

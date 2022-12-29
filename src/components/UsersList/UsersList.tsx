@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useLoaderData } from "react-router-dom";
 
-import { UserItem } from "dtos/UserItem";
+import { UserItem } from "dtos";
 
 export const UsersList: React.FC = () => {
   const { users } = useLoaderData() as { users: UserItem[] };

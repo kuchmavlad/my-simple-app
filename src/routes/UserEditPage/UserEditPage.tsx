@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
 
-import { UserItem } from "dtos/UserItem";
+import { UserItem } from "dtos";
 import { formDataTransform } from "utils/formDataTransform";
 
 import "./userEditPage.css";

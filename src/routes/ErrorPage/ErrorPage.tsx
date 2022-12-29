@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
 
-import { ErrorType } from "dtos/ErrorType";
+import { ErrorType } from "dtos";
 
 import "./errorPage.css";
 
