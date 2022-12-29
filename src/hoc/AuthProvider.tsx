@@ -1,8 +1,7 @@
 import React, { createContext, ReactElement } from "react";
 
-import { UserItem } from "dtos/UserItem";
-import { Nullable } from "dtos/globalTypes";
-import { useAsyncState } from "hooks/useAsyncState";
+import { UserItem, Nullable } from "dtos";
+import { useAsyncState } from "hooks";
 
 interface AuthProviderProps {
   children: ReactElement;

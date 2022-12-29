@@ -6,8 +6,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { UserItem } from "dtos/UserItem";
-import { useAuth } from "hooks/useAuth";
+import { UserItem } from "dtos";
+import { useAuth } from "hooks";
 
 import "./loginPage.css";
 

@@ -3,7 +3,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 
 import { LogOutModal } from "components";
-import { useAuth } from "hooks/useAuth";
+import { useAuth } from "hooks";
 
 import "./logInOut.css";
 
