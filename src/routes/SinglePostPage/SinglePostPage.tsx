@@ -1,12 +1,12 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
-import { PostComments } from "components/PostComents/PostComments";
+import { PostComments } from "components";
 
-import { PostsItem } from "dtos/PostItem";
-import { CommentType } from "dtos/CommentType";
+import { PostsItem, CommentType } from "dtos";
+import { useAuth } from "hooks";
 
-import "./index.css";
+import "./singlePostPage.css";
 
 type SinglePostLoaderType = {
   post: PostsItem;
@@ -15,12 +15,38 @@ type SinglePostLoaderType = {
 
 export const SinglePostPage: React.FC = () => {
   const { post, comments } = useLoaderData() as SinglePostLoaderType;
+  const { user } = useAuth();
 
+  const isUsersPost = user?.id === post?.userId;
   const { title, body } = post;
+
   return (
     <div className="postPageWrapper">
       <h4>{title}</h4>
       <div>{body}</div>
+
+      {isUsersPost && (
+        <div className="postButtons">
+          <Form action="edit">
+            <button type="submit">Edit</button>
+          </Form>
+          <Form
+            method="post"
+            action="destroy"
+            onSubmit={(event) => {
+              if (
+                !window.confirm(
+                  "Please confirm you want to delete this record."
+                )
+              ) {
+                event.preventDefault();
+              }
+            }}
+          >
+            <button type="submit">Delete</button>
+          </Form>
+        </div>
+      )}
 
       <PostComments comments={comments} />
     </div>
