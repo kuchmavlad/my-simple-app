@@ -8,3 +8,4 @@ export { LogOutModal } from "./LogOutModal/LogOutModal";
 export { UserPageIndex } from "./UserPageIndex/UserPageIndex";
 export { Favorite } from "./Favorite/Favorite";
 export { PostsCheckbox } from "./PostsCheckbox/PostsCheckbox";
+export { PostComments } from "./PostComents/PostComments";

@@ -2,9 +2,9 @@ import React from "react";
 import { Form, redirect, useLoaderData } from "react-router-dom";
 
 import { Favorite } from "components";
-import { UserItem } from "dtos/UserItem";
+import { UserItem } from "dtos";
 
-import "./userPaage.css";
+import "./userPage.css";
 
 export const UserPage: React.FC = () => {
   const { name, username, email, address, phone, website, favorite } =

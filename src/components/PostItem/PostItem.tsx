@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { PostsItem } from "dtos/PostItem";
+import { PostsItem } from "dtos";
 
 interface PostsItemTest extends PostsItem {
   index: number;
