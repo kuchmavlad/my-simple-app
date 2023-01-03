@@ -1,0 +1,12 @@
+.postPageWrapper {
+    padding: 20px;
+}
+
+.postButtons {
+    display: flex;
+    padding-top: 10px;
+}
+
+.postButtons form {
+    padding: 5px;
+}

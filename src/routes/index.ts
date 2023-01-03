@@ -4,5 +4,5 @@ export { SinglePostPage } from "./SinglePostPage/SinglePostPage";
 export { UsersPage } from "./UsersPage/UsersPage";
 export { UserPage } from "./UserPage/UserPage";
 export { UserEditPage } from "./UserEditPage/UserEditPage";
-export { NewPostPage } from "./NewPostPage/NewPostPage";
+export { PostActionsPage } from "./PostActionsPage/PostActionsPage";
 export { Root } from "./Root";

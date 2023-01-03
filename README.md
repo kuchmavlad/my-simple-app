@@ -6,11 +6,9 @@
 * [Features](#features)
 
 ## General info
-
 It is simple React application, created to skillup. The main technology for building the app was used react-router-dom v6.4. The application has a minimum of styles, the main styles were taken from the react-router-dom guide. App can receive data, modify, delete and add. Also app has simple authorization.
 	
 ## Technologies
-
 Project is created with:
 * React-router-dom v6.4
 * Type script
@@ -21,7 +19,6 @@ Project is created with:
 * Abssoluting path
 	
 ## Setup
-
 To run this project, install it locally using npm:
 
 ```
@@ -30,10 +27,7 @@ $ npm run server
 $ npm start
 ```
 
-
-
 ## How to Use the App
-
 App is a multi-page site with authorization. Email is used as authorization(can use Sincere@april.biz or '1' for authorization).
 
 ### Home page
@@ -41,35 +35,34 @@ Simple page.
 
 ### Posts page
 Get all posts.
+if you came from user page, all actions will be associated only with your posts.
 * Сan get the first 10 posts
 * Can add new post(required authorization)
 * Can click on the post and get the full details of the post.
 
-### User page(required authorization)
+### Single Post page
+* Сan edit/remove post(if you are the author of this post)
+
+### Users page(required authorization)
 Get all users.
 * Can search users
 * Can add new user
-* Can edit/remove user
 * Can choose favorite user
 
-## Tests
+### User page(required authorization)
+* Can edit/remove user
+* Can check you posts
 
+## Tests
 In developing
 
 ```
 $npm test
 ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
+Launches the test runner in the interactive watch mode.
 
 ## Features
-
-* Add new post
-* Edit post
 * Albums page
 * Tests
 * Fix any type
-
-
