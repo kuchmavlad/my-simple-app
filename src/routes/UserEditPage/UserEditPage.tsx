@@ -14,107 +14,110 @@ export const UserEditPage: React.FC = () => {
   const { street, suite, city, zipcode } = address;
 
   return (
-    <Form method="post" id="contact-form">
-      <div className="itemWrapper">
-        <div className="itemTitle">Name:</div>
-        <div>
-          <input
-            placeholder="Name"
-            aria-label="Name"
-            type="text"
-            name="name"
-            defaultValue={name}
-          />
-          <input
-            placeholder="Username"
-            aria-label="username"
-            type="text"
-            name="username"
-            defaultValue={username}
-          />
-        </div>
-      </div>
-
-      <div className="itemWrapper">
-        <div className="itemTitle">Email:</div>
-        <div>
-          <input
-            type="text"
-            name="email"
-            placeholder="Example@.com"
-            defaultValue={email}
-          />
-        </div>
-      </div>
-
-      <div className="itemWrapper">
-        <div className="itemTitle">Phone:</div>
-        <div>
-          <input
-            type="text"
-            name="phone"
-            placeholder="123-456-7890"
-            defaultValue={phone}
-          />
-        </div>
-      </div>
-
-      <div className="itemWrapper">
-        <div className="itemTitle">Website:</div>
-        <div>
-          <input
-            type="text"
-            name="website"
-            placeholder="example.com"
-            defaultValue={website}
-          />
-        </div>
-      </div>
-      <div className="itemWrapper">
-        <div className="itemTitle">Address:</div>
-        <div>
+    <div className="userWrapper">
+      <h2>User edit</h2>
+      <Form method="post" id="contact-form">
+        <div className="itemWrapper">
+          <div className="itemTitle">Name:</div>
           <div>
             <input
+              placeholder="Name"
+              aria-label="Name"
               type="text"
-              name="address.street"
-              placeholder="Street"
-              aria-label="Street"
-              defaultValue={street}
+              name="name"
+              defaultValue={name}
             />
             <input
+              placeholder="Username"
+              aria-label="username"
               type="text"
-              name="address.suite"
-              placeholder="Suite"
-              aria-label="Suite"
-              defaultValue={suite}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="address.city"
-              placeholder="City"
-              aria-label="City"
-              defaultValue={city}
-            />
-            <input
-              type="text"
-              name="address.zipcode"
-              placeholder="Zipcode"
-              aria-label="Zipcode"
-              defaultValue={zipcode}
+              name="username"
+              defaultValue={username}
             />
           </div>
         </div>
-      </div>
 
-      <p>
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => navigate(-1)}>
-          Cancel
-        </button>
-      </p>
-    </Form>
+        <div className="itemWrapper">
+          <div className="itemTitle">Email:</div>
+          <div>
+            <input
+              type="text"
+              name="email"
+              placeholder="Example@.com"
+              defaultValue={email}
+            />
+          </div>
+        </div>
+
+        <div className="itemWrapper">
+          <div className="itemTitle">Phone:</div>
+          <div>
+            <input
+              type="text"
+              name="phone"
+              placeholder="123-456-7890"
+              defaultValue={phone}
+            />
+          </div>
+        </div>
+
+        <div className="itemWrapper">
+          <div className="itemTitle">Website:</div>
+          <div>
+            <input
+              type="text"
+              name="website"
+              placeholder="example.com"
+              defaultValue={website}
+            />
+          </div>
+        </div>
+        <div className="itemWrapper">
+          <div className="itemTitle">Address:</div>
+          <div>
+            <div>
+              <input
+                type="text"
+                name="address.street"
+                placeholder="Street"
+                aria-label="Street"
+                defaultValue={street}
+              />
+              <input
+                type="text"
+                name="address.suite"
+                placeholder="Suite"
+                aria-label="Suite"
+                defaultValue={suite}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                name="address.city"
+                placeholder="City"
+                aria-label="City"
+                defaultValue={city}
+              />
+              <input
+                type="text"
+                name="address.zipcode"
+                placeholder="Zipcode"
+                aria-label="Zipcode"
+                defaultValue={zipcode}
+              />
+            </div>
+          </div>
+        </div>
+
+        <p>
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => navigate(-1)}>
+            Cancel
+          </button>
+        </p>
+      </Form>
+    </div>
   );
 };
 

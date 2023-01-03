@@ -33,18 +33,21 @@ export const LoginPage: React.FC = () => {
   }, []);
 
   return (
-    <Form id="login-form" method="post">
-      <input
-        id="email"
-        placeholder="Example@.com"
-        type="text"
-        name="email"
-        required
-        onInvalid={() => alert("Please Fill all input field!")}
-      />
+    <div className="loginWrapper">
+      <h2>Login page</h2>
+      <Form id="login-form" method="post">
+        <input
+          id="email"
+          placeholder="Example@.com"
+          type="text"
+          name="email"
+          required
+          onInvalid={() => alert("Please Fill all input field!")}
+        />
 
-      <button type="submit">Login</button>
-    </Form>
+        <button type="submit">Login</button>
+      </Form>
+    </div>
   );
 };
 
