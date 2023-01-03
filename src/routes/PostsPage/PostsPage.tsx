@@ -1,5 +1,10 @@
 import React from "react";
-import { Form, useActionData, useLoaderData } from "react-router-dom";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useParams,
+} from "react-router-dom";
 
 import { PostItem, PostsCheckbox } from "components";
 import { PostsItem } from "dtos";
@@ -9,6 +14,7 @@ import "./postPage.css";
 export const PostsPage: React.FC = () => {
   const loadedPosts = useLoaderData() as PostsItem[];
   const limitedPosts = useActionData() as PostsItem[];
+  const { userId } = useParams();
 
   const posts = limitedPosts ?? loadedPosts;
 
@@ -16,29 +22,44 @@ export const PostsPage: React.FC = () => {
     <div className="postsWrapper">
       <h2>PostsPage</h2>
       <div className="postsHeader">
-        <PostsCheckbox />
+        {!!posts.length && <PostsCheckbox />}
 
-        <Form action="new">
+        <Form action={`/post${userId ? `/${userId}` : ""}/new`}>
           <button type="submit">Add new post</button>
         </Form>
       </div>
 
-      {posts.map((post, index) => (
-        <PostItem {...post} index={index + 1} key={post.id} />
-      ))}
+      {!posts.length ? (
+        <h3>No posts</h3>
+      ) : (
+        posts.map((post, index) => (
+          <PostItem
+            {...post}
+            index={index + 1}
+            key={post.id}
+            userId={userId ? +userId : 0}
+          />
+        ))
+      )}
     </div>
   );
 };
 
-export const postLoader = async () => {
-  return await fetch("http://localhost:3001/posts").then((resp) => resp.json());
+export const postLoader = async ({ params }: any) => {
+  return await fetch(
+    `http://localhost:3001/posts${
+      params.userId ? `?userId=${params.userId}` : ""
+    }`
+  ).then((resp) => resp.json());
 };
 
-export const postAction = async ({ request }: any) => {
+export const postAction = async ({ request, params }: any) => {
   const formData = await request.formData();
   const limit = formData.get("limit");
 
-  return fetch(`http://localhost:3001/posts${limit ? "?_limit=10" : ""}`).then(
-    (resp) => resp.json()
-  );
+  return fetch(
+    `http://localhost:3001/posts${
+      params.userId ? `?userId=${params.userId}` : ""
+    }${limit ? "&_limit=10" : ""}`
+  ).then((resp) => resp.json());
 };

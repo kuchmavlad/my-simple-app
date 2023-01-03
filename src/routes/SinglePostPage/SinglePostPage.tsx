@@ -54,12 +54,12 @@ export const SinglePostPage: React.FC = () => {
 };
 
 export const singPostLoader = async ({ params }: any) => {
-  const post = await fetch(`http://localhost:3001/posts/${params.id}`).then(
+  const post = await fetch(`http://localhost:3001/posts/${params.postId}`).then(
     (resp) => resp.json()
   );
 
   const comments = await fetch(
-    `http://localhost:3001/comments?postId=${params.id}`
+    `http://localhost:3001/comments?postId=${params.postId}`
   ).then((resp) => resp.json());
 
   return { post, comments };

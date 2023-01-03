@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 
 import { PostsItem } from "dtos";
 
-interface PostsItemTest extends PostsItem {
+interface PostsItemExtends extends PostsItem {
   index: number;
 }
 
-export const PostItem: React.FC<PostsItemTest> = ({ id, title, index }) => {
+export const PostItem: React.FC<PostsItemExtends> = ({
+  id,
+  title,
+  index,
+  userId,
+}) => {
   return (
-    <Link to={`/posts/${id}`}>
+    <Link to={`/post${userId ? `/${userId}` : ""}/${id}`}>
       <h4>{`${index}. ${title}`}</h4>
     </Link>
   );

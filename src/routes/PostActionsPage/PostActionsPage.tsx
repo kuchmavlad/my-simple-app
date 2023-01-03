@@ -65,7 +65,9 @@ export const newPosAction = async ({ request, params }: any) => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then(() => redirect("/posts"));
+    }).then(() =>
+      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
+    );
   } else if (request.url.includes("edit")) {
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
@@ -73,22 +75,26 @@ export const newPosAction = async ({ request, params }: any) => {
 
     const newPost = { ...updates, userId };
 
-    return fetch(`http://localhost:3001/posts/${params.id}`, {
+    return fetch(`http://localhost:3001/posts/${params.postId}`, {
       method: "PUT",
       body: JSON.stringify(newPost),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then(() => redirect("/posts"));
+    }).then(() =>
+      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
+    );
   } else if (request.url.includes("destroy")) {
-    return await fetch(`http://localhost:3001/posts/${params.id}`, {
+    return await fetch(`http://localhost:3001/posts/${params.postId}`, {
       method: "DELETE",
-    }).then(() => redirect("/posts"));
+    }).then(() =>
+      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
+    );
   }
 };
 
 export const newPostLoader = async ({ params }: any) => {
-  return await fetch(`http://localhost:3001/posts/${params.id}`).then((resp) =>
-    resp.json()
+  return await fetch(`http://localhost:3001/posts/${params.postId}`).then(
+    (resp) => resp.json()
   );
 };
