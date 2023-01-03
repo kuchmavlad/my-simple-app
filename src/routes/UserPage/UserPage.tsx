@@ -7,7 +7,7 @@ import { UserItem } from "dtos";
 import "./userPage.css";
 
 export const UserPage: React.FC = () => {
-  const { name, username, email, address, phone, website, favorite } =
+  const { name, username, email, address, phone, website, favorite, id } =
     useLoaderData() as UserItem;
 
   const { street, suite, city, zipcode } = address;
@@ -46,6 +46,9 @@ export const UserPage: React.FC = () => {
             }}
           >
             <button type="submit">Delete</button>
+          </Form>
+          <Form action={`/posts/${id}`}>
+            <button type="submit">My posts</button>
           </Form>
         </div>
       </div>

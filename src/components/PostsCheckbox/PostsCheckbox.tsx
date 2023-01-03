@@ -1,11 +1,15 @@
-import { Form, useSubmit } from "react-router-dom";
+import { Form, useParams, useSubmit } from "react-router-dom";
 import React from "react";
 
 export const PostsCheckbox: React.FC = () => {
   const submit = useSubmit();
+  const { userId } = useParams();
 
   const checkboxHandle = ({ currentTarget }: any) => {
-    submit(currentTarget.form, { method: "post", action: "/posts" });
+    submit(currentTarget.form, {
+      method: "post",
+      action: `/posts${userId ? `/${userId}` : ""}`,
+    });
   };
 
   return (

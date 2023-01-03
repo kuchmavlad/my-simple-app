@@ -45,12 +45,23 @@ const router = createBrowserRouter([
         action: postAction,
       },
       {
-        path: "posts/:id",
+        path: "posts/:userId",
+        element: <PostsPage />,
+        loader: postLoader,
+        action: postAction,
+      },
+      {
+        path: "post/:postId",
         element: <SinglePostPage />,
         loader: singPostLoader,
       },
       {
-        path: "posts/new",
+        path: "post/:userId/:postId",
+        element: <SinglePostPage />,
+        loader: singPostLoader,
+      },
+      {
+        path: "post/new",
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -59,7 +70,16 @@ const router = createBrowserRouter([
         action: newPosAction,
       },
       {
-        path: "posts/:id/edit",
+        path: "post/:userId/new",
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: newPosAction,
+      },
+      {
+        path: "post/:postId/edit",
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -69,7 +89,26 @@ const router = createBrowserRouter([
         loader: newPostLoader,
       },
       {
-        path: "posts/:id/destroy",
+        path: "post/:userId/:postId/edit",
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: newPosAction,
+        loader: newPostLoader,
+      },
+      {
+        path: "post/:postId/destroy",
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: newPosAction,
+      },
+      {
+        path: "post/:userId/:postId/destroy",
         element: (
           <RequireAuth>
             <PostActionsPage />
