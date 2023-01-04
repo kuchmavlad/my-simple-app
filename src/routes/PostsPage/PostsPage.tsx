@@ -45,7 +45,7 @@ export const PostsPage: React.FC = () => {
   );
 };
 
-export const postLoader = async ({ params }: any) => {
+export const postsLoader = async ({ params }: any) => {
   return await fetch(
     `http://localhost:3001/posts${
       params.userId ? `?userId=${params.userId}` : ""
@@ -53,7 +53,7 @@ export const postLoader = async ({ params }: any) => {
   ).then((resp) => resp.json());
 };
 
-export const postAction = async ({ request, params }: any) => {
+export const postsAction = async ({ request, params }: any) => {
   const formData = await request.formData();
   const limit = formData.get("limit");
 

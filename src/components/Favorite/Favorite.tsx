@@ -20,19 +20,3 @@ export const Favorite: React.FC<FavoriteProps> = ({ favorite }) => {
     </Form>
   );
 };
-
-export const favoriteAction = async ({ request, params }: any) => {
-  let formData = await request.formData();
-
-  const favorite = {
-    favorite: formData.get("favorite") === "true",
-  };
-
-  return fetch(`http://localhost:3001/users/${params.id}`, {
-    method: "PATCH",
-    body: JSON.stringify(favorite),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  });
-};

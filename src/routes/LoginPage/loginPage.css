@@ -4,6 +4,7 @@
   align-items: center;
 }
 
+.loginWrapper,
 #login-form input {
   margin: 20px 0;
 }

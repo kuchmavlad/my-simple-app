@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, redirect, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
 import { Favorite } from "components";
 import { UserItem } from "dtos";
@@ -57,13 +57,23 @@ export const UserPage: React.FC = () => {
 };
 
 export const userLoader = async ({ params }: any) => {
-  return await fetch(`http://localhost:3001/users/${params.id}`).then((resp) =>
-    resp.json()
+  return await fetch(`http://localhost:3001/users/${params.userId}`).then(
+    (resp) => resp.json()
   );
 };
 
-export const createUserAction = async ({ params }: any) => {
-  return await fetch(`http://localhost:3001/users/${params.id}`, {
-    method: "DELETE",
-  }).then(() => redirect("/users"));
+export const userAction = async ({ request, params }: any) => {
+  let formData = await request.formData();
+
+  const favorite = {
+    favorite: formData.get("favorite") === "true",
+  };
+
+  return fetch(`http://localhost:3001/users/${params.id}`, {
+    method: "PATCH",
+    body: JSON.stringify(favorite),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  });
 };

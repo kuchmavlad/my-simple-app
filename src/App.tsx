@@ -6,30 +6,29 @@ import {
   Root,
   ErrorPage,
   PostsPage,
-  SinglePostPage,
+  PostPage,
   UsersPage,
   UserPage,
-  UserEditPage,
+  UserActionsPage,
   PostActionsPage,
+  LoginPage,
 } from "routes";
 
-import { loginAction, LoginPage } from "routes/LoginPage/LoginPage";
-import { postAction, postLoader } from "routes/PostsPage/PostsPage";
-import { singPostLoader } from "routes/SinglePostPage/SinglePostPage";
-import { userAction, usersLoader } from "routes/UsersPage/UsersPage";
-import { createUserAction, userLoader } from "routes/UserPage/UserPage";
-import { userEditAction } from "routes/UserEditPage/UserEditPage";
-import {
-  newPosAction,
-  newPostLoader,
-} from "routes/PostActionsPage/PostActionsPage";
-import {
-  userCreateAction,
-  UserCreatePage,
-} from "routes/UserCreatePage/UserCreatePage";
-import { favoriteAction } from "components/Favorite/Favorite";
-
 import { AuthProvider, RequireAuth } from "hoc";
+import {
+  loginAction,
+  postsAction,
+  usersAction,
+  userAction,
+  userActions,
+  postActions,
+} from "routes/actions";
+import {
+  postsLoader,
+  postLoader,
+  usersLoader,
+  userLoader,
+} from "routes/loaders";
 
 const router = createBrowserRouter([
   {
@@ -41,24 +40,24 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
-        loader: postLoader,
-        action: postAction,
+        loader: postsLoader,
+        action: postsAction,
       },
       {
         path: "posts/:userId",
         element: <PostsPage />,
-        loader: postLoader,
-        action: postAction,
+        loader: postsLoader,
+        action: postsAction,
       },
       {
         path: "post/:postId",
-        element: <SinglePostPage />,
-        loader: singPostLoader,
+        element: <PostPage />,
+        loader: postLoader,
       },
       {
         path: "post/:userId/:postId",
-        element: <SinglePostPage />,
-        loader: singPostLoader,
+        element: <PostPage />,
+        loader: postLoader,
       },
       {
         path: "post/new",
@@ -67,7 +66,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:userId/new",
@@ -76,7 +75,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:postId/edit",
@@ -85,8 +84,8 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
-        loader: newPostLoader,
+        action: postActions,
+        loader: postLoader,
       },
       {
         path: "post/:userId/:postId/edit",
@@ -95,8 +94,8 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
-        loader: newPostLoader,
+        action: postActions,
+        loader: postLoader,
       },
       {
         path: "post/:postId/destroy",
@@ -105,7 +104,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:userId/:postId/destroy",
@@ -114,7 +113,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "users",
@@ -124,30 +123,30 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
         loader: usersLoader,
-        action: userAction,
+        action: usersAction,
         children: [
           { index: true, element: <UserPageIndex /> },
           {
-            path: ":id",
+            path: ":userId",
             element: <UserPage />,
             loader: userLoader,
-            action: favoriteAction,
+            action: userAction,
           },
           {
-            path: ":id/edit",
-            element: <UserEditPage />,
+            path: ":userId/edit",
+            element: <UserActionsPage />,
             loader: userLoader,
-            action: userEditAction,
+            action: userActions,
           },
           {
-            path: ":id/new",
-            element: <UserCreatePage />,
-            action: userCreateAction,
+            path: ":userId/new",
+            element: <UserActionsPage />,
+            action: userActions,
           },
           {
-            path: ":id/destroy",
-            element: <UserCreatePage />,
-            action: createUserAction,
+            path: ":userId/destroy",
+            element: <UserActionsPage />,
+            action: userActions,
           },
         ],
       },

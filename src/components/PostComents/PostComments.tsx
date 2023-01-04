@@ -5,7 +5,7 @@ import { CommentType } from "dtos";
 import "./postComments.css";
 
 interface PostCommentsProps {
-  comments: CommentType[];
+  comments: CommentType[] | undefined;
 }
 
 export const PostComments: React.FC<PostCommentsProps> = ({ comments }) => {
@@ -13,7 +13,7 @@ export const PostComments: React.FC<PostCommentsProps> = ({ comments }) => {
     <>
       <h4>Comments:</h4>
 
-      {!comments.length ? (
+      {!comments || !comments.length ? (
         "No comments"
       ) : (
         <div className="commentsWrapper">
