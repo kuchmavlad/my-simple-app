@@ -8,14 +8,14 @@ import {
 } from "react-router-dom";
 
 import { useAuth } from "hooks";
-import { PostsItem } from "dtos";
+import { PostLoaderType } from "dtos";
 
 import "./postActionsPage.css";
 
 export const PostActionsPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const post = useLoaderData() as PostsItem;
+  const { post } = useLoaderData() as PostLoaderType;
   const [, { pathname }] = useMatches();
 
   const isNewPost = pathname.includes("new");
@@ -50,51 +50,37 @@ export const PostActionsPage: React.FC = () => {
   );
 };
 
-export const newPosAction = async ({ request, params }: any) => {
+export const postActions = async ({ request, params }: any) => {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  const userId = +formData.get("userId");
+  const url = "http://localhost:3001/posts";
+  const headers = {
+    "Content-type": "application/json; charset=UTF-8",
+  };
+
+  const redirectPath = `/posts${params.userId ? `/${params.userId}` : ""}`;
+
   if (request.url.includes("new")) {
     const uniqId = Date.now();
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
-    const userId = +formData.get("userId");
-
     const newPost = { ...updates, id: uniqId, userId };
 
-    return fetch(`http://localhost:3001/posts`, {
+    return fetch(url, {
       method: "POST",
       body: JSON.stringify(newPost),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then(() =>
-      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
-    );
+      headers,
+    }).then(() => redirect(redirectPath));
   } else if (request.url.includes("edit")) {
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
-    const userId = +formData.get("userId");
-
     const newPost = { ...updates, userId };
 
-    return fetch(`http://localhost:3001/posts/${params.postId}`, {
+    return fetch(`${url}/${params.postId}`, {
       method: "PUT",
       body: JSON.stringify(newPost),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    }).then(() =>
-      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
-    );
+      headers,
+    }).then(() => redirect(redirectPath));
   } else if (request.url.includes("destroy")) {
-    return await fetch(`http://localhost:3001/posts/${params.postId}`, {
+    return await fetch(`${url}/${params.postId}`, {
       method: "DELETE",
-    }).then(() =>
-      redirect(`/posts${params.userId ? `/${params.userId}` : ""}`)
-    );
+    }).then(() => redirect(redirectPath));
   }
-};
-
-export const newPostLoader = async ({ params }: any) => {
-  return await fetch(`http://localhost:3001/posts/${params.postId}`).then(
-    (resp) => resp.json()
-  );
 };

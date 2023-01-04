@@ -6,7 +6,7 @@ import {
   Root,
   ErrorPage,
   PostsPage,
-  SinglePostPage,
+  PostPage,
   UsersPage,
   UserPage,
   UserActionsPage,
@@ -14,19 +14,21 @@ import {
   LoginPage,
 } from "routes";
 
-import { loginAction } from "routes/LoginPage/LoginPage";
-import { postAction, postLoader } from "routes/PostsPage/PostsPage";
-import { singPostLoader } from "routes/SinglePostPage/SinglePostPage";
-import { userAction, usersLoader } from "routes/UsersPage/UsersPage";
-import { userLoader } from "routes/UserPage/UserPage";
-import { userActions } from "routes/UserActionsPage/UserActionsPage";
-import {
-  newPosAction,
-  newPostLoader,
-} from "routes/PostActionsPage/PostActionsPage";
-import { favoriteAction } from "components/Favorite/Favorite";
-
 import { AuthProvider, RequireAuth } from "hoc";
+import {
+  loginAction,
+  postsAction,
+  usersAction,
+  userAction,
+  userActions,
+  postActions,
+} from "routes/actions";
+import {
+  postsLoader,
+  postLoader,
+  usersLoader,
+  userLoader,
+} from "routes/loaders";
 
 const router = createBrowserRouter([
   {
@@ -38,24 +40,24 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
-        loader: postLoader,
-        action: postAction,
+        loader: postsLoader,
+        action: postsAction,
       },
       {
         path: "posts/:userId",
         element: <PostsPage />,
-        loader: postLoader,
-        action: postAction,
+        loader: postsLoader,
+        action: postsAction,
       },
       {
         path: "post/:postId",
-        element: <SinglePostPage />,
-        loader: singPostLoader,
+        element: <PostPage />,
+        loader: postLoader,
       },
       {
         path: "post/:userId/:postId",
-        element: <SinglePostPage />,
-        loader: singPostLoader,
+        element: <PostPage />,
+        loader: postLoader,
       },
       {
         path: "post/new",
@@ -64,7 +66,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:userId/new",
@@ -73,7 +75,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:postId/edit",
@@ -82,8 +84,8 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
-        loader: newPostLoader,
+        action: postActions,
+        loader: postLoader,
       },
       {
         path: "post/:userId/:postId/edit",
@@ -92,8 +94,8 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
-        loader: newPostLoader,
+        action: postActions,
+        loader: postLoader,
       },
       {
         path: "post/:postId/destroy",
@@ -102,7 +104,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "post/:userId/:postId/destroy",
@@ -111,7 +113,7 @@ const router = createBrowserRouter([
             <PostActionsPage />
           </RequireAuth>
         ),
-        action: newPosAction,
+        action: postActions,
       },
       {
         path: "users",
@@ -121,14 +123,14 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
         loader: usersLoader,
-        action: userAction,
+        action: usersAction,
         children: [
           { index: true, element: <UserPageIndex /> },
           {
             path: ":userId",
             element: <UserPage />,
             loader: userLoader,
-            action: favoriteAction,
+            action: userAction,
           },
           {
             path: ":userId/edit",

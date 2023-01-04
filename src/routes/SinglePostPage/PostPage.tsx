@@ -3,18 +3,13 @@ import { Form, useLoaderData } from "react-router-dom";
 
 import { PostComments } from "components";
 
-import { PostsItem, CommentType } from "dtos";
+import { PostLoaderType } from "dtos";
 import { useAuth } from "hooks";
 
-import "./singlePostPage.css";
+import "./postPage.css";
 
-type SinglePostLoaderType = {
-  post: PostsItem;
-  comments: CommentType[];
-};
-
-export const SinglePostPage: React.FC = () => {
-  const { post, comments } = useLoaderData() as SinglePostLoaderType;
+export const PostPage: React.FC = () => {
+  const { post, comments } = useLoaderData() as PostLoaderType;
   const { user } = useAuth();
 
   const isUsersPost = user?.id === post?.userId;
@@ -53,14 +48,21 @@ export const SinglePostPage: React.FC = () => {
   );
 };
 
-export const singPostLoader = async ({ params }: any) => {
+export const postLoader = async ({ request, params }: any) => {
+  const isSimplePostAction = !(
+    request.url.includes("edit") || request.url.includes("destroy")
+  );
+
   const post = await fetch(`http://localhost:3001/posts/${params.postId}`).then(
     (resp) => resp.json()
   );
 
-  const comments = await fetch(
-    `http://localhost:3001/comments?postId=${params.postId}`
-  ).then((resp) => resp.json());
+  if (isSimplePostAction) {
+    const comments = await fetch(
+      `http://localhost:3001/comments?postId=${params.postId}`
+    ).then((resp) => resp.json());
 
-  return { post, comments };
+    return { post, comments };
+  }
+  return { post };
 };

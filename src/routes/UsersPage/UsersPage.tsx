@@ -31,7 +31,7 @@ export const UsersPage: React.FC = () => {
   );
 };
 
-export const userAction = () => {
+export const usersAction = () => {
   const uniqId = Date.now();
   return redirect(`/users/${uniqId}/new`);
 };

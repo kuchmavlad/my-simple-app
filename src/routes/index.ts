@@ -1,7 +1,7 @@
 export { ErrorPage } from "./ErrorPage/ErrorPage";
 export { LoginPage } from "./LoginPage/LoginPage";
 export { PostsPage } from "./PostsPage/PostsPage";
-export { SinglePostPage } from "./SinglePostPage/SinglePostPage";
+export { PostPage } from "./SinglePostPage/PostPage";
 export { UsersPage } from "./UsersPage/UsersPage";
 export { UserPage } from "./UserPage/UserPage";
 export { UserActionsPage } from "./UserActionsPage/UserActionsPage";
