@@ -1,14 +1,42 @@
-import React from "react";
-import { Form, redirect, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  redirect,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
-import { formDataTransform } from "utils/formDataTransform";
+import { UserItem } from "dtos";
+import { formDataTransform, getUserInfo } from "utils";
 
-export const UserCreatePage: React.FC = () => {
+import "./userActionsPage.css";
+
+export const UserActionsPage: React.FC = () => {
   const navigate = useNavigate();
+  const user = useLoaderData() as UserItem;
+  const { pathname } = useLocation();
+  const [isEditPage, setIsEditPage] = useState(false);
+
+  const {
+    name,
+    username,
+    email,
+    phone,
+    website,
+    street,
+    suite,
+    city,
+    zipcode,
+  } = getUserInfo(user, isEditPage);
+
+  useEffect(() => {
+    setIsEditPage(pathname.includes("edit"));
+  }, [pathname]);
 
   return (
     <div className="userWrapper">
-      <h2>User create</h2>
+      <h2>User {isEditPage ? "edit" : "new"}</h2>
       <Form method="post" id="contact-form">
         <div className="itemWrapper">
           <div className="itemTitle">Name:</div>
@@ -19,6 +47,7 @@ export const UserCreatePage: React.FC = () => {
               type="text"
               name="name"
               required
+              defaultValue={name}
             />
             <input
               placeholder="Username"
@@ -26,6 +55,7 @@ export const UserCreatePage: React.FC = () => {
               type="text"
               name="username"
               required
+              defaultValue={username}
             />
           </div>
         </div>
@@ -38,6 +68,7 @@ export const UserCreatePage: React.FC = () => {
               name="email"
               placeholder="Example@.com"
               required
+              defaultValue={email}
             />
           </div>
         </div>
@@ -50,6 +81,7 @@ export const UserCreatePage: React.FC = () => {
               name="phone"
               placeholder="123-456-7890"
               required
+              defaultValue={phone}
             />
           </div>
         </div>
@@ -62,6 +94,7 @@ export const UserCreatePage: React.FC = () => {
               name="website"
               placeholder="example.com"
               required
+              defaultValue={website}
             />
           </div>
         </div>
@@ -75,6 +108,7 @@ export const UserCreatePage: React.FC = () => {
                 placeholder="Street"
                 aria-label="Street"
                 required
+                defaultValue={street}
               />
               <input
                 type="text"
@@ -82,6 +116,7 @@ export const UserCreatePage: React.FC = () => {
                 placeholder="Suite"
                 aria-label="Suite"
                 required
+                defaultValue={suite}
               />
             </div>
             <div>
@@ -91,6 +126,7 @@ export const UserCreatePage: React.FC = () => {
                 placeholder="City"
                 aria-label="City"
                 required
+                defaultValue={city}
               />
               <input
                 type="text"
@@ -98,6 +134,7 @@ export const UserCreatePage: React.FC = () => {
                 placeholder="Zipcode"
                 aria-label="Zipcode"
                 required
+                defaultValue={zipcode}
               />
             </div>
           </div>
@@ -114,17 +151,31 @@ export const UserCreatePage: React.FC = () => {
   );
 };
 
-export const userCreateAction = async ({ request, params }: any) => {
+export const userActions = async ({ request, params }: any) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
+  const url = "http://localhost:3001/users";
+  const headers = {
+    "Content-type": "application/json; charset=UTF-8",
+  };
 
-  const newUser = { ...updates, id: +params.id };
+  if (request.url.includes("edit")) {
+    return fetch(`${url}/${params.userId}`, {
+      method: "PUT",
+      body: JSON.stringify(formDataTransform(updates)),
+      headers,
+    }).then(() => redirect(`/users/${params.userId}`));
+  } else if (request.url.includes("new")) {
+    const newUser = { ...updates, id: +params.userId };
 
-  return fetch(`http://localhost:3001/users`, {
-    method: "POST",
-    body: JSON.stringify(formDataTransform(newUser)),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).then(() => redirect(`/users/${params.id}`));
+    return fetch(url, {
+      method: "POST",
+      body: JSON.stringify(formDataTransform(newUser)),
+      headers,
+    }).then(() => redirect(`/users/${params.userId}`));
+  } else if (request.url.includes("destroy")) {
+    return await fetch(`${url}/${params.userId}`, {
+      method: "DELETE",
+    }).then(() => redirect("/users"));
+  }
 };

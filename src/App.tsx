@@ -9,24 +9,21 @@ import {
   SinglePostPage,
   UsersPage,
   UserPage,
-  UserEditPage,
+  UserActionsPage,
   PostActionsPage,
+  LoginPage,
 } from "routes";
 
-import { loginAction, LoginPage } from "routes/LoginPage/LoginPage";
+import { loginAction } from "routes/LoginPage/LoginPage";
 import { postAction, postLoader } from "routes/PostsPage/PostsPage";
 import { singPostLoader } from "routes/SinglePostPage/SinglePostPage";
 import { userAction, usersLoader } from "routes/UsersPage/UsersPage";
-import { createUserAction, userLoader } from "routes/UserPage/UserPage";
-import { userEditAction } from "routes/UserEditPage/UserEditPage";
+import { userLoader } from "routes/UserPage/UserPage";
+import { userActions } from "routes/UserActionsPage/UserActionsPage";
 import {
   newPosAction,
   newPostLoader,
 } from "routes/PostActionsPage/PostActionsPage";
-import {
-  userCreateAction,
-  UserCreatePage,
-} from "routes/UserCreatePage/UserCreatePage";
 import { favoriteAction } from "components/Favorite/Favorite";
 
 import { AuthProvider, RequireAuth } from "hoc";
@@ -128,26 +125,26 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <UserPageIndex /> },
           {
-            path: ":id",
+            path: ":userId",
             element: <UserPage />,
             loader: userLoader,
             action: favoriteAction,
           },
           {
-            path: ":id/edit",
-            element: <UserEditPage />,
+            path: ":userId/edit",
+            element: <UserActionsPage />,
             loader: userLoader,
-            action: userEditAction,
+            action: userActions,
           },
           {
-            path: ":id/new",
-            element: <UserCreatePage />,
-            action: userCreateAction,
+            path: ":userId/new",
+            element: <UserActionsPage />,
+            action: userActions,
           },
           {
-            path: ":id/destroy",
-            element: <UserCreatePage />,
-            action: createUserAction,
+            path: ":userId/destroy",
+            element: <UserActionsPage />,
+            action: userActions,
           },
         ],
       },
