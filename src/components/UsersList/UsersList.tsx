@@ -8,7 +8,7 @@ export const UsersList: React.FC = () => {
 
   return (
     <nav>
-      {users.length ? (
+      {!!users.length ? (
         <ul>
           {users.map(({ id, name, favorite }) => (
             <li key={id}>

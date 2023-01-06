@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 
 import { PostItem, PostsCheckbox } from "components";
+
 import { PostsItem } from "dtos";
+import { ENDPOINT_PATH, PATHS } from "../../constants";
 
 import "./postPage.css";
 
@@ -24,7 +26,7 @@ export const PostsPage: React.FC = () => {
       <div className="postsHeader">
         {!!posts.length && <PostsCheckbox />}
 
-        <Form action={`/post${userId ? `/${userId}` : ""}/new`}>
+        <Form action={`/post${userId ? `/${userId}` : ""}/${PATHS.NEW}`}>
           <button type="submit">Add new post</button>
         </Form>
       </div>
@@ -47,9 +49,7 @@ export const PostsPage: React.FC = () => {
 
 export const postsLoader = async ({ params }: any) => {
   return await fetch(
-    `http://localhost:3001/posts${
-      params.userId ? `?userId=${params.userId}` : ""
-    }`
+    `${ENDPOINT_PATH.POSTS}${params.userId ? `?userId=${params.userId}` : ""}`
   ).then((resp) => resp.json());
 };
 
@@ -58,8 +58,8 @@ export const postsAction = async ({ request, params }: any) => {
   const limit = formData.get("limit");
 
   return fetch(
-    `http://localhost:3001/posts${
-      params.userId ? `?userId=${params.userId}` : ""
-    }${limit ? "&_limit=10" : ""}`
+    `${ENDPOINT_PATH.POSTS}${params.userId ? `?userId=${params.userId}` : ""}${
+      limit ? "&_limit=10" : ""
+    }`
   ).then((resp) => resp.json());
 };

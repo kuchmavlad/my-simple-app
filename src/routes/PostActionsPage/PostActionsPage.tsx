@@ -9,20 +9,26 @@ import {
 
 import { useAuth } from "hooks";
 import { PostLoaderType } from "dtos";
+import {
+  ENDPOINT_PATH,
+  FORM_METHODS,
+  HTTP_METHODS,
+  PATHS,
+} from "../../constants";
 
 import "./postActionsPage.css";
 
 export const PostActionsPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { post } = useLoaderData() as PostLoaderType;
+  const postData = useLoaderData() as PostLoaderType | undefined;
   const [, { pathname }] = useMatches();
 
-  const isNewPost = pathname.includes("new");
-  const userIdValue = isNewPost ? user?.id : post.userId;
+  const isNewPost = pathname.includes(PATHS.NEW);
+  const userIdValue = isNewPost ? user?.id : postData?.post.userId;
 
   return (
-    <Form method="post" id="new-post">
+    <Form method={FORM_METHODS.POST} id="new-post">
       <input hidden name="userId" defaultValue={userIdValue} />
 
       <input
@@ -31,13 +37,13 @@ export const PostActionsPage: React.FC = () => {
         aria-label="title"
         type="text"
         name="title"
-        defaultValue={post?.title}
+        defaultValue={postData?.post.title}
       />
       <textarea
         required
         placeholder="Description"
         name="body"
-        defaultValue={post?.body}
+        defaultValue={postData?.post.body}
       />
 
       <div>
@@ -54,33 +60,35 @@ export const postActions = async ({ request, params }: any) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   const userId = +formData.get("userId");
-  const url = "http://localhost:3001/posts";
+  const url = ENDPOINT_PATH.POSTS;
   const headers = {
     "Content-type": "application/json; charset=UTF-8",
   };
 
-  const redirectPath = `/posts${params.userId ? `/${params.userId}` : ""}`;
+  const redirectPath = `/${PATHS.POSTS}${
+    params.userId ? `/${params.userId}` : ""
+  }`;
 
-  if (request.url.includes("new")) {
+  if (request.url.includes(PATHS.NEW)) {
     const uniqId = Date.now();
     const newPost = { ...updates, id: uniqId, userId };
 
     return fetch(url, {
-      method: "POST",
+      method: HTTP_METHODS.POST,
       body: JSON.stringify(newPost),
       headers,
     }).then(() => redirect(redirectPath));
-  } else if (request.url.includes("edit")) {
+  } else if (request.url.includes(PATHS.EDIT)) {
     const newPost = { ...updates, userId };
 
     return fetch(`${url}/${params.postId}`, {
-      method: "PUT",
+      method: HTTP_METHODS.PUT,
       body: JSON.stringify(newPost),
       headers,
     }).then(() => redirect(redirectPath));
-  } else if (request.url.includes("destroy")) {
+  } else if (request.url.includes(PATHS.DESTROY)) {
     return await fetch(`${url}/${params.postId}`, {
-      method: "DELETE",
+      method: HTTP_METHODS.DELETE,
     }).then(() => redirect(redirectPath));
   }
 };

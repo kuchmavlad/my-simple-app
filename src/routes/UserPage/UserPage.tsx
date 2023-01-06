@@ -2,7 +2,14 @@ import React from "react";
 import { Form, useLoaderData } from "react-router-dom";
 
 import { Favorite } from "components";
+
 import { UserItem } from "dtos";
+import {
+  ENDPOINT_PATH,
+  FORM_METHODS,
+  HTTP_METHODS,
+  PATHS,
+} from "../../constants";
 
 import "./userPage.css";
 
@@ -29,12 +36,12 @@ export const UserPage: React.FC = () => {
         <p>{`Website: ${website}`}</p>
 
         <div id="contactButtons">
-          <Form action="edit">
+          <Form action={PATHS.EDIT}>
             <button type="submit">Edit</button>
           </Form>
           <Form
-            method="post"
-            action="destroy"
+            method={FORM_METHODS.POST}
+            action={PATHS.DESTROY}
             onSubmit={(event) => {
               if (
                 !window.confirm(
@@ -47,7 +54,7 @@ export const UserPage: React.FC = () => {
           >
             <button type="submit">Delete</button>
           </Form>
-          <Form action={`/posts/${id}`}>
+          <Form action={`/${PATHS.POSTS}/${id}`}>
             <button type="submit">My posts</button>
           </Form>
         </div>
@@ -57,8 +64,8 @@ export const UserPage: React.FC = () => {
 };
 
 export const userLoader = async ({ params }: any) => {
-  return await fetch(`http://localhost:3001/users/${params.userId}`).then(
-    (resp) => resp.json()
+  return await fetch(`${ENDPOINT_PATH.USERS}/${params.userId}`).then((resp) =>
+    resp.json()
   );
 };
 
@@ -69,8 +76,8 @@ export const userAction = async ({ request, params }: any) => {
     favorite: formData.get("favorite") === "true",
   };
 
-  return fetch(`http://localhost:3001/users/${params.id}`, {
-    method: "PATCH",
+  return fetch(`${ENDPOINT_PATH.USERS}/${params.id}`, {
+    method: HTTP_METHODS.PATCH,
     body: JSON.stringify(favorite),
     headers: {
       "Content-type": "application/json; charset=UTF-8",

@@ -1,7 +1,8 @@
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 import { ErrorType } from "dtos";
+import { PATHS } from "../../constants";
 
 import "./errorPage.css";
 
@@ -15,6 +16,7 @@ export const ErrorPage: React.FC = () => {
       <p>
         <i>{statusText}</i>
       </p>
+      <Link to={PATHS.ROOT}>Home</Link>
     </div>
   );
 };

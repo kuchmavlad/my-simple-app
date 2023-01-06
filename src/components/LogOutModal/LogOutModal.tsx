@@ -2,6 +2,7 @@ import React, { Dispatch, RefObject, SetStateAction, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "hooks";
+import { PATHS } from "../../constants";
 
 import "./logOutModal.css";
 
@@ -21,7 +22,7 @@ export const LogOutModal: React.FC<LogOutModalProps> = ({
 
   const onLogOutHandle = () => {
     toggleModal(false);
-    signOut(() => navigate("/", { replace: false }));
+    signOut(() => navigate(PATHS.ROOT, { replace: false }));
   };
 
   useEffect(() => {
