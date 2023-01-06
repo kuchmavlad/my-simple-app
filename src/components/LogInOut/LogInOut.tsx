@@ -3,7 +3,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 
 import { LogOutModal } from "components";
+
 import { useAuth } from "hooks";
+import { PATHS } from "../../constants";
 
 import "./logInOut.css";
 
@@ -26,7 +28,7 @@ export const LogInOut: React.FC = () => {
             <AiOutlineUser />
           </span>
         ) : (
-          <Link to="/login" state={{ from: location }}>
+          <Link to={PATHS.LOGIN} state={{ from: location }}>
             Login
           </Link>
         )}

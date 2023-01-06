@@ -9,12 +9,18 @@ import {
 
 import { UserItem } from "dtos";
 import { formDataTransform, getUserInfo } from "utils";
+import {
+  ENDPOINT_PATH,
+  FORM_METHODS,
+  HTTP_METHODS,
+  PATHS,
+} from "../../constants";
 
 import "./userActionsPage.css";
 
 export const UserActionsPage: React.FC = () => {
   const navigate = useNavigate();
-  const user = useLoaderData() as UserItem;
+  const user = useLoaderData() as UserItem | undefined;
   const { pathname } = useLocation();
   const [isEditPage, setIsEditPage] = useState(false);
 
@@ -31,13 +37,13 @@ export const UserActionsPage: React.FC = () => {
   } = getUserInfo(user, isEditPage);
 
   useEffect(() => {
-    setIsEditPage(pathname.includes("edit"));
+    setIsEditPage(pathname.includes(PATHS.EDIT));
   }, [pathname]);
 
   return (
     <div className="userWrapper">
       <h2>User {isEditPage ? "edit" : "new"}</h2>
-      <Form method="post" id="contact-form">
+      <Form method={FORM_METHODS.POST} id="contact-form">
         <div className="itemWrapper">
           <div className="itemTitle">Name:</div>
           <div>
@@ -154,28 +160,28 @@ export const UserActionsPage: React.FC = () => {
 export const userActions = async ({ request, params }: any) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  const url = "http://localhost:3001/users";
+  const url = ENDPOINT_PATH.USERS;
   const headers = {
     "Content-type": "application/json; charset=UTF-8",
   };
 
-  if (request.url.includes("edit")) {
+  if (request.url.includes(PATHS.EDIT)) {
     return fetch(`${url}/${params.userId}`, {
-      method: "PUT",
+      method: HTTP_METHODS.PUT,
       body: JSON.stringify(formDataTransform(updates)),
       headers,
-    }).then(() => redirect(`/users/${params.userId}`));
-  } else if (request.url.includes("new")) {
+    }).then(() => redirect(`/${PATHS.USERS}/${params.userId}`));
+  } else if (request.url.includes(PATHS.NEW)) {
     const newUser = { ...updates, id: +params.userId };
 
     return fetch(url, {
-      method: "POST",
+      method: HTTP_METHODS.POST,
       body: JSON.stringify(formDataTransform(newUser)),
       headers,
-    }).then(() => redirect(`/users/${params.userId}`));
-  } else if (request.url.includes("destroy")) {
+    }).then(() => redirect(`/${PATHS.USERS}/${params.userId}`));
+  } else if (request.url.includes(PATHS.DESTROY)) {
     return await fetch(`${url}/${params.userId}`, {
-      method: "DELETE",
-    }).then(() => redirect("/users"));
+      method: HTTP_METHODS.DELETE,
+    }).then(() => redirect(`/${PATHS.USERS}`));
   }
 };

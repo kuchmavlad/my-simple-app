@@ -3,6 +3,7 @@ import { Form, Outlet, redirect, useNavigation } from "react-router-dom";
 import classNames from "classnames";
 
 import { UserSearch, UsersList } from "components";
+import { ENDPOINT_PATH, FORM_METHODS, PATHS } from "../../constants";
 
 import "./userPage.css";
 
@@ -18,7 +19,7 @@ export const UsersPage: React.FC = () => {
       <div id="sidebar">
         <div>
           <UserSearch />
-          <Form method="post">
+          <Form method={FORM_METHODS.POST}>
             <button type="submit">New</button>
           </Form>
         </div>
@@ -33,7 +34,7 @@ export const UsersPage: React.FC = () => {
 
 export const usersAction = () => {
   const uniqId = Date.now();
-  return redirect(`/users/${uniqId}/new`);
+  return redirect(`/${PATHS.USERS}/${uniqId}/${PATHS.NEW}`);
 };
 
 export const usersLoader = async ({ request }: any) => {
@@ -41,15 +42,13 @@ export const usersLoader = async ({ request }: any) => {
   const q = url.searchParams.get("q");
 
   if (q) {
-    const users = await fetch(`http://localhost:3001/users?q=${q}`).then(
-      (resp) => resp.json()
+    const users = await fetch(`${ENDPOINT_PATH.USERS}?q=${q}`).then((resp) =>
+      resp.json()
     );
     return { users, q };
   }
 
-  const users = await fetch("http://localhost:3001/users").then((resp) =>
-    resp.json()
-  );
+  const users = await fetch(ENDPOINT_PATH.USERS).then((resp) => resp.json());
 
   return { users };
 };

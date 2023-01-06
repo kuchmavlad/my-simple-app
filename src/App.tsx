@@ -30,37 +30,39 @@ import {
   userLoader,
 } from "routes/loaders";
 
+import { PATHS } from "./constants";
+
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: PATHS.ROOT,
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomeIndex /> },
       {
-        path: "posts",
+        path: PATHS.POSTS,
         element: <PostsPage />,
         loader: postsLoader,
         action: postsAction,
       },
       {
-        path: "posts/:userId",
+        path: PATHS.USER_POSTS,
         element: <PostsPage />,
         loader: postsLoader,
         action: postsAction,
       },
       {
-        path: "post/:postId",
+        path: PATHS.POST,
         element: <PostPage />,
         loader: postLoader,
       },
       {
-        path: "post/:userId/:postId",
+        path: PATHS.USER_POST,
         element: <PostPage />,
         loader: postLoader,
       },
       {
-        path: "post/new",
+        path: PATHS.POST_NEW,
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -69,7 +71,7 @@ const router = createBrowserRouter([
         action: postActions,
       },
       {
-        path: "post/:userId/new",
+        path: PATHS.USER_POST_NEW,
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -78,17 +80,7 @@ const router = createBrowserRouter([
         action: postActions,
       },
       {
-        path: "post/:postId/edit",
-        element: (
-          <RequireAuth>
-            <PostActionsPage />
-          </RequireAuth>
-        ),
-        action: postActions,
-        loader: postLoader,
-      },
-      {
-        path: "post/:userId/:postId/edit",
+        path: PATHS.POST_EDIT,
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -98,7 +90,17 @@ const router = createBrowserRouter([
         loader: postLoader,
       },
       {
-        path: "post/:postId/destroy",
+        path: PATHS.USER_POST_EDIT,
+        element: (
+          <RequireAuth>
+            <PostActionsPage />
+          </RequireAuth>
+        ),
+        action: postActions,
+        loader: postLoader,
+      },
+      {
+        path: PATHS.POST_DESTROY,
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -107,7 +109,7 @@ const router = createBrowserRouter([
         action: postActions,
       },
       {
-        path: "post/:userId/:postId/destroy",
+        path: PATHS.USER_POST_DESTROY,
         element: (
           <RequireAuth>
             <PostActionsPage />
@@ -116,7 +118,7 @@ const router = createBrowserRouter([
         action: postActions,
       },
       {
-        path: "users",
+        path: PATHS.USERS,
         element: (
           <RequireAuth>
             <UsersPage />
@@ -127,31 +129,31 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <UserPageIndex /> },
           {
-            path: ":userId",
+            path: PATHS.USER,
             element: <UserPage />,
             loader: userLoader,
             action: userAction,
           },
           {
-            path: ":userId/edit",
+            path: PATHS.USER_EDIT,
             element: <UserActionsPage />,
             loader: userLoader,
             action: userActions,
           },
           {
-            path: ":userId/new",
+            path: PATHS.USER_NEW,
             element: <UserActionsPage />,
             action: userActions,
           },
           {
-            path: ":userId/destroy",
+            path: PATHS.USER_DESTROY,
             element: <UserActionsPage />,
             action: userActions,
           },
         ],
       },
       {
-        path: "login",
+        path: PATHS.LOGIN,
         element: <LoginPage />,
         action: loginAction,
       },
