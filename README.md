@@ -49,7 +49,7 @@ Get all users.
 * Can add new user
 * Can choose favorite user
 
-### User page(required authorization)
+### Single User page(required authorization)
 * Can edit/remove user
 * Can check you posts
 
@@ -65,4 +65,3 @@ Launches the test runner in the interactive watch mode.
 ## Features
 * Albums page
 * Tests
-* Fix any type
