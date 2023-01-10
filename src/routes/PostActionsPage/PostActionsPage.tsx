@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Form,
+  LoaderFunctionArgs,
   redirect,
   useLoaderData,
   useMatches,
@@ -56,10 +57,10 @@ export const PostActionsPage: React.FC = () => {
   );
 };
 
-export const postActions = async ({ request, params }: any) => {
+export const postActions = async ({ request, params }: LoaderFunctionArgs) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  const userId = +formData.get("userId");
+  const userId = Number(formData.get("userId"));
   const url = ENDPOINT_PATH.POSTS;
   const headers = {
     "Content-type": "application/json; charset=UTF-8",

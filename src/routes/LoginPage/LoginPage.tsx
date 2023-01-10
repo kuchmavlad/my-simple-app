@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Form,
+  LoaderFunctionArgs,
   useActionData,
   useLocation,
   useNavigate,
@@ -52,7 +53,7 @@ export const LoginPage: React.FC = () => {
   );
 };
 
-export async function loginAction({ request }: any) {
+export async function loginAction({ request }: LoaderFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
 

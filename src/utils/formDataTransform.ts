@@ -1,5 +1,5 @@
 export const formDataTransform = <T extends {}>(obj: T) => {
-  const formattedData = {} as any;
+  const formattedData = {} as { [key: string]: T[Extract<keyof T, string>] };
 
   for (const updatesKey in obj) {
     const dotIndex = updatesKey.indexOf(".");
@@ -7,7 +7,7 @@ export const formDataTransform = <T extends {}>(obj: T) => {
       const key = updatesKey.slice(0, dotIndex);
       const value = updatesKey.slice(dotIndex + 1);
 
-      const address = {} as any;
+      const address = {} as { [key: string]: T[Extract<keyof T, string>] };
       address[value] = obj[updatesKey];
 
       formattedData[key] = { ...formattedData[key], ...address };

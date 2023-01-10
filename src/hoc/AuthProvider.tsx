@@ -22,7 +22,7 @@ const authInitialState: authInitialStateProps = {
 export const AuthContext = createContext(authInitialState);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useAsyncState(null);
+  const [user, setUser] = useAsyncState<Nullable<UserItem>>(null);
 
   const signIn = async (user: UserItem, cb: () => void) => {
     await setUser(user);

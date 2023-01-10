@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Form,
+  LoaderFunctionArgs,
   redirect,
   useLoaderData,
   useLocation,
@@ -157,7 +158,7 @@ export const UserActionsPage: React.FC = () => {
   );
 };
 
-export const userActions = async ({ request, params }: any) => {
+export const userActions = async ({ request, params }: LoaderFunctionArgs) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   const url = ENDPOINT_PATH.USERS;
@@ -172,7 +173,7 @@ export const userActions = async ({ request, params }: any) => {
       headers,
     }).then(() => redirect(`/${PATHS.USERS}/${params.userId}`));
   } else if (request.url.includes(PATHS.NEW)) {
-    const newUser = { ...updates, id: +params.userId };
+    const newUser = { ...updates, id: Number(params.userId) };
 
     return fetch(url, {
       method: HTTP_METHODS.POST,
