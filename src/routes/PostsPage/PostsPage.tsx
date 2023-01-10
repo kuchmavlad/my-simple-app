@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Form,
+  LoaderFunctionArgs,
   useActionData,
   useLoaderData,
   useParams,
@@ -47,19 +48,19 @@ export const PostsPage: React.FC = () => {
   );
 };
 
-export const postsLoader = async ({ params }: any) => {
+export const postsLoader = async ({ params }: LoaderFunctionArgs) => {
   return await fetch(
     `${ENDPOINT_PATH.POSTS}${params.userId ? `?userId=${params.userId}` : ""}`
   ).then((resp) => resp.json());
 };
 
-export const postsAction = async ({ request, params }: any) => {
+export const postsAction = async ({ request, params }: LoaderFunctionArgs) => {
   const formData = await request.formData();
   const limit = formData.get("limit");
 
   return fetch(
     `${ENDPOINT_PATH.POSTS}${params.userId ? `?userId=${params.userId}` : ""}${
-      limit ? "&_limit=10" : ""
+      limit ? `${params.userId ? "&" : "?"}_limit=10` : ""
     }`
   ).then((resp) => resp.json());
 };

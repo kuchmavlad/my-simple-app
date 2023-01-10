@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import { Favorite } from "components";
 
@@ -63,13 +63,13 @@ export const UserPage: React.FC = () => {
   );
 };
 
-export const userLoader = async ({ params }: any) => {
+export const userLoader = async ({ params }: LoaderFunctionArgs) => {
   return await fetch(`${ENDPOINT_PATH.USERS}/${params.userId}`).then((resp) =>
     resp.json()
   );
 };
 
-export const userAction = async ({ request, params }: any) => {
+export const userAction = async ({ request, params }: LoaderFunctionArgs) => {
   let formData = await request.formData();
 
   const favorite = {

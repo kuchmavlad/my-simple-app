@@ -26,7 +26,8 @@ export const LogOutModal: React.FC<LogOutModalProps> = ({
   };
 
   useEffect(() => {
-    const closeModal = ({ path }: any) => {
+    const closeModal = (event: MouseEvent) => {
+      const path = event.composedPath();
       const svgPath = btnRef.current;
       const svg = btnRef.current?.firstElementChild;
       const span = btnRef.current?.firstElementChild?.firstElementChild;

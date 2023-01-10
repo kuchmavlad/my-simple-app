@@ -1,5 +1,11 @@
 import React from "react";
-import { Form, Outlet, redirect, useNavigation } from "react-router-dom";
+import {
+  Form,
+  LoaderFunctionArgs,
+  Outlet,
+  redirect,
+  useNavigation,
+} from "react-router-dom";
 import classNames from "classnames";
 
 import { UserSearch, UsersList } from "components";
@@ -37,7 +43,7 @@ export const usersAction = () => {
   return redirect(`/${PATHS.USERS}/${uniqId}/${PATHS.NEW}`);
 };
 
-export const usersLoader = async ({ request }: any) => {
+export const usersLoader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
 import { PostComments } from "components";
 
@@ -49,7 +49,7 @@ export const PostPage: React.FC = () => {
   );
 };
 
-export const postLoader = async ({ request, params }: any) => {
+export const postLoader = async ({ request, params }: LoaderFunctionArgs) => {
   const isSimplePostAction = !(
     request.url.includes(PATHS.EDIT) || request.url.includes(PATHS.DESTROY)
   );

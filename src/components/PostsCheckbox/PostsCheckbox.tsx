@@ -1,5 +1,5 @@
 import { Form, useParams, useSubmit } from "react-router-dom";
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 import { FORM_METHODS, PATHS } from "../../constants";
 
@@ -7,10 +7,10 @@ export const PostsCheckbox: React.FC = () => {
   const submit = useSubmit();
   const { userId } = useParams();
 
-  const checkboxHandle = ({ currentTarget }: any) => {
+  const checkboxHandle = ({ currentTarget }: ChangeEvent<HTMLInputElement>) => {
     submit(currentTarget.form, {
       method: FORM_METHODS.POST,
-      action: `${PATHS.POSTS}${userId ? `/${userId}` : ""}`,
+      action: `/${PATHS.POSTS}${userId ? `/${userId}` : ""}`,
     });
   };
 
