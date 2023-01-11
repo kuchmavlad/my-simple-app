@@ -9,7 +9,7 @@ import "./header.css";
 export const Header: React.FC = () => {
   return (
     <header>
-      <nav>
+      <nav data-testid="navbar">
         <NavLink to={PATHS.ROOT}>Home</NavLink>
         <NavLink to={PATHS.POSTS}>Posts</NavLink>
         <NavLink to={PATHS.USERS}>Users</NavLink>

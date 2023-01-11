@@ -23,7 +23,7 @@ export const PostsPage: React.FC = () => {
 
   return (
     <div className="postsWrapper">
-      <h2>PostsPage</h2>
+      <h2>Posts Page</h2>
       <div className="postsHeader">
         {!!posts.length && <PostsCheckbox />}
 
