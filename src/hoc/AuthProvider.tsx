@@ -1,19 +1,13 @@
 import React, { createContext, ReactElement } from "react";
 
-import { UserItem, Nullable } from "dtos";
+import { UserItem, Nullable, AuthInitialStateProps } from "dtos";
 import { useAsyncState } from "hooks";
 
 interface AuthProviderProps {
   children: ReactElement;
 }
 
-interface authInitialStateProps {
-  user: Nullable<UserItem>;
-  signIn: (user: UserItem, cb: () => void) => void;
-  signOut: (cb: () => void) => void;
-}
-
-const authInitialState: authInitialStateProps = {
+const authInitialState: AuthInitialStateProps = {
   user: null,
   signIn: () => {},
   signOut: () => {},

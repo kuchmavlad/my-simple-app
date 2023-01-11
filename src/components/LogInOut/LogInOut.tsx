@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import { LogOutModal } from "components";
 
@@ -28,9 +28,9 @@ export const LogInOut: React.FC = () => {
             <AiOutlineUser />
           </span>
         ) : (
-          <Link to={PATHS.LOGIN} state={{ from: location }}>
+          <NavLink to={PATHS.LOGIN} state={{ from: location }}>
             Login
-          </Link>
+          </NavLink>
         )}
         <LogOutModal
           show={isModalOpen}
