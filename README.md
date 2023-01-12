@@ -57,8 +57,8 @@ Get all users.
 In developing
 
 ```
-npm run server
-$npm test
+$ npm run server
+$ npm test
 ```
 
 Launches the test runner in the interactive watch mode.
