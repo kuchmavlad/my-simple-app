@@ -57,6 +57,7 @@ Get all users.
 In developing
 
 ```
+npm run server
 $npm test
 ```
 
