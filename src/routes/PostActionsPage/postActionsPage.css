@@ -16,3 +16,12 @@
 #new-post button[type="button"] {
     color: inherit;
 }
+
+.postActionWrapper .inputWrapper {
+display: flex;
+    flex-direction: column;
+}
+
+.postActionWrapper .inputWrapper > * {
+    margin: 10px 0;
+}
