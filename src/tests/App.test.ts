@@ -1,30 +1,12 @@
-import { waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithRouter, renderWithRouterAndProvider } from "./utils";
-
-const contextState = {
-  user: {
-    name: "Dev",
-    username: "Dev",
-    email: "1",
-    phone: "1",
-    website: "1",
-    address: {
-      street: "1",
-      suite: "1",
-      city: "1",
-      zipcode: "1",
-    },
-    id: 1,
-  },
-  signIn: () => {},
-  signOut: () => {},
-};
+import { authContextStateMock } from "./moks";
 
 describe("render app", () => {
-  it("render on home page", () => {
+  it("should render on home page", () => {
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const homeLink = getByText("Home");
@@ -35,7 +17,7 @@ describe("render app", () => {
 });
 
 describe("routing", () => {
-  it("routing to posts page", async () => {
+  it("should rout to posts page", async () => {
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const postsLink = getByText("Posts");
@@ -51,7 +33,7 @@ describe("routing", () => {
     expect(postsLink).toHaveClass("active");
   });
 
-  it("routing to users page without authorization", async () => {
+  it("should rout to login page without authorization", async () => {
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const usersLink = getByText("Users");
@@ -68,8 +50,8 @@ describe("routing", () => {
     expect(loginLink).toHaveClass("active");
   });
 
-  it("routing to users page with authorization", async () => {
-    const { getByText } = renderWithRouterAndProvider(contextState);
+  it("should rout to users page with authorization", async () => {
+    const { getByText } = renderWithRouterAndProvider(authContextStateMock);
     const homeTitle = getByText(/my simple app/i);
     const usersLink = getByText("Users");
     const homeLink = getByText("Home");
@@ -84,7 +66,7 @@ describe("routing", () => {
     expect(usersLink).toHaveClass("active");
   });
 
-  it("routing to login page", async () => {
+  it("should rout to login page", async () => {
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const homeLink = getByText("Home");
@@ -100,8 +82,10 @@ describe("routing", () => {
     expect(loginLink).toHaveClass("active");
   });
 
-  it("routing to wrong path", async () => {
-    const { getByText } = renderWithRouter(["/wrongPath"]);
+  it("should rout to wrong path", () => {
+    const { getByText } = renderWithRouter(undefined, {
+      initialEntries: ["/wrongPath"],
+    });
     const errorTitle = getByText(/oops!/i);
     const homeLink = getByText("Home");
 

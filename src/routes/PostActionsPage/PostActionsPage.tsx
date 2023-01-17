@@ -32,26 +32,32 @@ export const PostActionsPage: React.FC = () => {
     <Form method={FORM_METHODS.POST} id="new-post">
       <input hidden name="userId" defaultValue={userIdValue} />
 
-      <input
-        required
-        placeholder="Title"
-        aria-label="title"
-        type="text"
-        name="title"
-        defaultValue={postData?.post.title}
-      />
-      <textarea
-        required
-        placeholder="Description"
-        name="body"
-        defaultValue={postData?.post.body}
-      />
+      <div className="postActionWrapper">
+        <h2>{isNewPost ? "New" : "Edit"} post</h2>
 
-      <div>
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => navigate(-1)}>
-          Cancel
-        </button>
+        <div className="inputWrapper">
+          <input
+            required
+            placeholder="Title"
+            aria-label="title"
+            type="text"
+            name="title"
+            defaultValue={postData?.post.title}
+          />
+          <textarea
+            required
+            placeholder="Description"
+            name="body"
+            defaultValue={postData?.post.body}
+          />
+        </div>
+
+        <div>
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => navigate(-1)}>
+            Cancel
+          </button>
+        </div>
       </div>
     </Form>
   );

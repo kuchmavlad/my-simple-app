@@ -1,32 +1,30 @@
 import * as React from "react";
-import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import {
+  createMemoryRouter,
+  RouteObject,
+  RouterProvider,
+} from "react-router-dom";
 import { render } from "@testing-library/react";
 
 import { AuthContext } from "../hoc/AuthProvider";
 import { routesConfig } from "utils";
-import { AuthInitialStateProps } from "dtos";
+import { AuthInitialStateProps, MemoryRoutOptionsType } from "dtos";
 
 export const renderWithRouter = (
-  initialEntries?: string[],
-  initialIndex?: number
+  routes?: RouteObject[],
+  opts?: MemoryRoutOptionsType
 ) => {
-  const router = createMemoryRouter(routesConfig, {
-    initialEntries,
-    initialIndex,
-  });
+  const router = createMemoryRouter(routes || routesConfig, opts);
 
   return render(<RouterProvider router={router} />);
 };
 
 export const renderWithRouterAndProvider = (
   providerState: AuthInitialStateProps,
-  initialEntries?: string[],
-  initialIndex?: number
+  routes?: RouteObject[],
+  opts?: MemoryRoutOptionsType
 ) => {
-  const router = createMemoryRouter(routesConfig, {
-    initialEntries,
-    initialIndex,
-  });
+  const router = createMemoryRouter(routes || routesConfig, opts);
 
   return render(
     <AuthContext.Provider value={providerState}>

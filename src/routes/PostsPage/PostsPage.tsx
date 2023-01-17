@@ -27,23 +27,26 @@ export const PostsPage: React.FC = () => {
       <div className="postsHeader">
         {!!posts.length && <PostsCheckbox />}
 
-        <Form action={`/post${userId ? `/${userId}` : ""}/${PATHS.NEW}`}>
+        <Form
+          action={`/post${userId?.length ? `/${userId}` : ""}/${PATHS.NEW}`}
+        >
           <button type="submit">Add new post</button>
         </Form>
       </div>
-
-      {!posts.length ? (
-        <h3>No posts</h3>
-      ) : (
-        posts.map((post, index) => (
-          <PostItem
-            {...post}
-            index={index + 1}
-            key={post.id}
-            userId={userId ? +userId : 0}
-          />
-        ))
-      )}
+      <div>
+        {!posts.length ? (
+          <h3>No posts</h3>
+        ) : (
+          posts.map((post, index) => (
+            <PostItem
+              {...post}
+              index={index + 1}
+              key={post.id}
+              userId={userId?.length && +userId}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 };
