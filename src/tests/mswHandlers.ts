@@ -67,3 +67,19 @@ export const setupPostDeleteHandlers = (postId: number) => {
     })
   );
 };
+
+export const setupPostEditHandlers = (postId: number) => {
+  server.use(
+    rest.put(`${ENDPOINT_PATH.POSTS}/${postId}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json({}));
+    })
+  );
+};
+
+export const setupPostsNewHandlers = () => {
+  server.use(
+    rest.post(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
+      return res(ctx.status(201), ctx.json({}));
+    })
+  );
+};
