@@ -13,7 +13,7 @@ import {
   setupPostsEmptyHandlers,
   setupPostsHandlers,
   setupPostsLimitedHandlers,
-  setupSinglePostsHandlers,
+  setupSinglePostHandlers,
 } from "tests/mswHandlers";
 import { PATHS } from "../../constants";
 
@@ -117,7 +117,7 @@ describe("posts page", () => {
 
     userEvent.click(posts[0]);
 
-    setupSinglePostsHandlers(postsMock[0].id);
+    setupSinglePostHandlers(postsMock[0].id);
 
     const commentsTitle = await waitFor(() => getByText(/comments/i));
     const postBodyText = await waitFor(() => getByText(postsMock[0].body));
