@@ -24,11 +24,15 @@ export const LogInOut: React.FC = () => {
     <>
       <div id="logInOut">
         {user ? (
-          <span onClick={onClickHandle} ref={btnRef}>
+          <span data-testid="loginIcon" onClick={onClickHandle} ref={btnRef}>
             <AiOutlineUser />
           </span>
         ) : (
-          <NavLink to={PATHS.LOGIN} state={{ from: location }}>
+          <NavLink
+            data-testid="loginLink"
+            to={PATHS.LOGIN}
+            state={{ from: location }}
+          >
             Login
           </NavLink>
         )}

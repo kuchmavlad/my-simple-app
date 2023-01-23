@@ -6,6 +6,8 @@ import {
   postsEmptyMock,
   postsLimitedMock,
   postsMock,
+  userMock,
+  usersMock,
 } from "./moks";
 import { ENDPOINT_PATH } from "../constants";
 
@@ -80,6 +82,30 @@ export const setupPostsNewHandlers = () => {
   server.use(
     rest.post(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
       return res(ctx.status(201), ctx.json({}));
+    })
+  );
+};
+
+export const setupUserLoginHandlers = (userEmail: string) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}?email=${userEmail}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([userMock]));
+    })
+  );
+};
+
+export const setupUserLoginEmptyHandlers = (userEmail: string) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}?email=${userEmail}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([]));
+    })
+  );
+};
+
+export const setupUsersHandlers = () => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(usersMock));
     })
   );
 };

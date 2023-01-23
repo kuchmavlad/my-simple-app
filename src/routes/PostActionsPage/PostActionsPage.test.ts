@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
-import { screen, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { authContextStateMock, postsMock } from "tests/moks";
-import { renderWithRouterAndProvider } from "tests/utils";
+import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import {
   setupPostDeleteHandlers,
   setupPostEditHandlers,
@@ -20,13 +20,10 @@ describe("Post Actions Page", () => {
     setupSinglePostHandlers(mockPostId);
     setupPostEditHandlers(mockPostId);
 
-    const { getByText, getByPlaceholderText } = renderWithRouterAndProvider(
-      authContextStateMock,
-      undefined,
-      {
+    const { getByText, getByPlaceholderText } =
+      renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
         initialEntries: [`/post/${userId}/${mockPostId}/edit`],
-      }
-    );
+      });
 
     const postEditTitle = await waitFor(() => getByText(/edit post/i));
     const titleInput = await waitFor(() => getByPlaceholderText(/title/i));
@@ -51,13 +48,10 @@ describe("Post Actions Page", () => {
   it("should create new post", async () => {
     setupPostsNewHandlers();
 
-    const { getByText, getByPlaceholderText } = renderWithRouterAndProvider(
-      authContextStateMock,
-      undefined,
-      {
+    const { getByText, getByPlaceholderText } =
+      renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
         initialEntries: ["/post/new"],
-      }
-    );
+      });
 
     const postNewTitle = getByText(/new post/i);
     const saveButton = getByText(/save/i);
@@ -89,7 +83,7 @@ describe("Post Actions Page", () => {
   });
 
   it("should rout back to posts page", async () => {
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {
@@ -107,7 +101,6 @@ describe("Post Actions Page", () => {
 
     const postsPageTitle = await waitFor(() => getByText(/posts page/i));
 
-    screen.debug();
     expect(postsPageTitle).toBeInTheDocument();
   });
 
@@ -115,7 +108,7 @@ describe("Post Actions Page", () => {
     const { id: mockPostId } = postsMock[0];
     setupSinglePostHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {
@@ -139,7 +132,7 @@ describe("Post Actions Page", () => {
     setupSinglePostHandlers(mockPostId);
     setupPostDeleteHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {

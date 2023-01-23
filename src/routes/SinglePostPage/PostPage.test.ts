@@ -2,7 +2,10 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
+import {
+  renderWithRouter,
+  renderWithRouterAndCustomProviderState,
+} from "tests/utils";
 import { authContextStateMock, commentsMock, postsMock } from "tests/moks";
 import {
   setupPostCommentsEmptyHandlers,
@@ -51,7 +54,7 @@ describe("Single post page", () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
     setupSinglePostHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {
@@ -72,7 +75,7 @@ describe("Single post page", () => {
     const { id: mockPostId } = postsMock[0];
     setupSinglePostHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {

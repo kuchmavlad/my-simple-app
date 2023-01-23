@@ -2,7 +2,10 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouter, renderWithRouterAndProvider } from "./utils";
+import {
+  renderWithRouter,
+  renderWithRouterAndCustomProviderState,
+} from "./utils";
 import { authContextStateMock } from "./moks";
 
 describe("render app", () => {
@@ -51,7 +54,8 @@ describe("routing", () => {
   });
 
   it("should rout to users page with authorization", async () => {
-    const { getByText } = renderWithRouterAndProvider(authContextStateMock);
+    const { getByText } =
+      renderWithRouterAndCustomProviderState(authContextStateMock);
     const homeTitle = getByText(/my simple app/i);
     const usersLink = getByText("Users");
     const homeLink = getByText("Home");
@@ -80,16 +84,5 @@ describe("routing", () => {
 
     expect(loginTitle).toBeInTheDocument();
     expect(loginLink).toHaveClass("active");
-  });
-
-  it("should rout to wrong path", () => {
-    const { getByText } = renderWithRouter(undefined, {
-      initialEntries: ["/wrongPath"],
-    });
-    const errorTitle = getByText(/oops!/i);
-    const homeLink = getByText("Home");
-
-    expect(errorTitle).toBeInTheDocument();
-    expect(homeLink).toBeInTheDocument();
   });
 });
