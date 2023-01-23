@@ -2,7 +2,10 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
+import {
+  renderWithRouter,
+  renderWithRouterAndCustomProviderState,
+} from "tests/utils";
 import {
   authContextStateMock,
   postsEmptyMock,
@@ -87,7 +90,7 @@ describe("posts page", () => {
   });
 
   it("should rout to action post page with authorization", async () => {
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {

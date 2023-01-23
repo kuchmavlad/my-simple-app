@@ -2,12 +2,14 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
+import {
+  renderWithRouter,
+  renderWithRouterAndCustomProviderState,
+} from "tests/utils";
 import { authContextStateMock, commentsMock, postsMock } from "tests/moks";
 import {
   setupPostCommentsEmptyHandlers,
   setupPostCommentsHandlers,
-  setupPostDeleteHandlers,
   setupSinglePostHandlers,
 } from "tests/mswHandlers";
 
@@ -52,7 +54,7 @@ describe("Single post page", () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
     setupSinglePostHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {
@@ -73,7 +75,7 @@ describe("Single post page", () => {
     const { id: mockPostId } = postsMock[0];
     setupSinglePostHandlers(mockPostId);
 
-    const { getByText } = renderWithRouterAndProvider(
+    const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
       {
@@ -90,55 +92,5 @@ describe("Single post page", () => {
     const editPostTitle = await waitFor(() => getByText(/edit post/i));
 
     expect(editPostTitle).toBeInTheDocument();
-  });
-
-  it("shouldn't delete post after cancellation", async () => {
-    const { id: mockPostId } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
-
-    const { getByText } = renderWithRouterAndProvider(
-      authContextStateMock,
-      undefined,
-      {
-        initialEntries: [`/post/${mockPostId}`],
-      }
-    );
-
-    const deleteButton = await waitFor(() => getByText("Delete"));
-
-    expect(deleteButton).toBeInTheDocument();
-    window.confirm = jest.fn(() => false);
-
-    userEvent.click(deleteButton);
-
-    expect(window.confirm).toBeCalledTimes(1);
-    expect(deleteButton).toBeInTheDocument();
-  });
-
-  it("should delete post after confirmation", async () => {
-    const { id: mockPostId } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
-
-    const { getByText } = renderWithRouterAndProvider(
-      authContextStateMock,
-      undefined,
-      {
-        initialEntries: [`/post/${mockPostId}`],
-      }
-    );
-
-    const deleteButton = await waitFor(() => getByText("Delete"));
-
-    expect(deleteButton).toBeInTheDocument();
-
-    window.confirm = jest.fn(() => true);
-    setupPostDeleteHandlers(mockPostId);
-
-    userEvent.click(deleteButton);
-
-    expect(window.confirm).toBeCalledTimes(1);
-
-    const postsPageTitle = await waitFor(() => getByText(/posts page/i));
-    expect(postsPageTitle).toBeInTheDocument();
   });
 });

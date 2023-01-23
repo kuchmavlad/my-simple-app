@@ -44,10 +44,11 @@ export const LoginPage: React.FC = () => {
           type="text"
           name="email"
           required
-          onInvalid={() => alert("Please Fill all input field!")}
         />
 
-        <button type="submit">Login</button>
+        <button data-testid="loginButton" type="submit">
+          Login
+        </button>
       </Form>
     </div>
   );
@@ -62,7 +63,7 @@ export async function loginAction({ request }: LoaderFunctionArgs) {
   );
 
   if (!result.length) {
-    alert(`User ${email} does not exist`);
+    window.alert(`User ${email} does not exist`);
   } else {
     return result[0];
   }
