@@ -20,7 +20,7 @@ export const UserPage: React.FC = () => {
   const { street, suite, city, zipcode } = address;
 
   return (
-    <div id="contact">
+    <div id="contact" data-testid="userPage">
       <div>
         <img src="https://via.placeholder.com/150" alt="" />
       </div>
@@ -76,7 +76,7 @@ export const userAction = async ({ request, params }: LoaderFunctionArgs) => {
     favorite: formData.get("favorite") === "true",
   };
 
-  return fetch(`${ENDPOINT_PATH.USERS}/${params.id}`, {
+  return await fetch(`${ENDPOINT_PATH.USERS}/${params.userId}`, {
     method: HTTP_METHODS.PATCH,
     body: JSON.stringify(favorite),
     headers: {

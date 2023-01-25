@@ -102,10 +102,42 @@ export const setupUserLoginEmptyHandlers = (userEmail: string) => {
   );
 };
 
+export const setupUserHandlers = (userId: number) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}/${userId}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(userMock));
+    })
+  );
+};
+
 export const setupUsersHandlers = () => {
   server.use(
     rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(usersMock));
+    })
+  );
+};
+
+export const setupUsersEmptyHandlers = () => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([]));
+    })
+  );
+};
+
+export const setupUsersFilterHandlers = (inputText: string) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}?q=${inputText}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([userMock]));
+    })
+  );
+};
+
+export const setupUsersFilterEmptyHandlers = (inputText: string) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}?q=${inputText}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([]));
     })
   );
 };

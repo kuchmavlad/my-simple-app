@@ -10,8 +10,8 @@ export const UsersList: React.FC = () => {
     <nav>
       {!!users.length ? (
         <ul>
-          {users.map(({ id, name, favorite }) => (
-            <li key={id}>
+          {users.map(({ id, name, favorite }, index) => (
+            <li data-testid="userItem" key={index}>
               <NavLink
                 to={`${id}`}
                 className={({ isActive, isPending }) =>
@@ -19,7 +19,7 @@ export const UsersList: React.FC = () => {
                 }
               >
                 {name}
-                {favorite && <span>★</span>}
+                {favorite && <span data-testid="testTEst">★</span>}
               </NavLink>
             </li>
           ))}

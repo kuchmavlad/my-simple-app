@@ -205,7 +205,7 @@ export const usersMock = [
     favorite: true,
   },
 ];
-export const userMock = usersMock[0];
+export const [userMock] = usersMock;
 export const postsMock = [
   {
     userId: 1,
