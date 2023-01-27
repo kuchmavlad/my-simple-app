@@ -37,15 +37,14 @@ describe("Users page", () => {
         initialEntries: ["/users"],
       });
 
-    const [firstUser] = await waitFor(() => getAllByTestId("userItem"));
-    const userLink = firstUser.firstElementChild;
+    const [firstUserLink] = await waitFor(() => getAllByTestId("userItem"));
 
-    expect(userLink).not.toHaveClass("active");
+    expect(firstUserLink).not.toHaveClass("active");
 
-    userLink && userEvent.click(userLink);
+    userEvent.click(firstUserLink);
 
     const userPage = await waitFor(() => getByTestId("userPage"));
     expect(userPage).toBeInTheDocument();
-    expect(userLink).toHaveClass("active");
+    expect(firstUserLink).toHaveClass("active");
   });
 });

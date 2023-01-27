@@ -206,6 +206,25 @@ export const usersMock = [
   },
 ];
 export const [userMock] = usersMock;
+export const newUserMock = {
+  name: "2",
+  username: "2",
+  email: "2",
+  phone: "2",
+  website: "2",
+  address: {
+    street: "2",
+    suite: "2",
+    city: "2",
+    zipcode: "2",
+  },
+  id: 999,
+};
+export const updatedUsersMock = [...usersMock, newUserMock];
+export const editedUserMock = { ...newUserMock, id: 1 };
+export const [, ...restUsers] = usersMock;
+export const editedUsersMock = [editedUserMock, ...restUsers];
+
 export const postsMock = [
   {
     userId: 1,
@@ -303,6 +322,7 @@ export const postsLimitedMock = [
     body: "quo et expedita modi cum officia vel magni doloribus qui repudiandae vero nisi sit quos veniam quod sed accusamus veritatis error",
   },
 ];
+
 export const commentsMock = [
   {
     postId: 1,

@@ -7,28 +7,28 @@ export const UsersList: React.FC = () => {
   const { users } = useLoaderData() as { users: UserItem[] };
 
   return (
-    <nav>
+    <>
       {!!users.length ? (
-        <ul>
+        <nav>
           {users.map(({ id, name, favorite }, index) => (
-            <li data-testid="userItem" key={index}>
-              <NavLink
-                to={`${id}`}
-                className={({ isActive, isPending }) =>
-                  isActive ? "active" : isPending ? "pending" : ""
-                }
-              >
-                {name}
-                {favorite && <span data-testid="testTEst">★</span>}
-              </NavLink>
-            </li>
+            <NavLink
+              data-testid="userItem"
+              key={index}
+              to={`${id}`}
+              className={({ isActive, isPending }) =>
+                isActive ? "active" : isPending ? "pending" : ""
+              }
+            >
+              {name}
+              {favorite && <span data-testid="testTEst">★</span>}
+            </NavLink>
           ))}
-        </ul>
+        </nav>
       ) : (
         <p>
           <i>No contacts</i>
         </p>
       )}
-    </nav>
+    </>
   );
 };

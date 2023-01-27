@@ -18,9 +18,7 @@ describe("User page", () => {
         initialEntries: [`/users/${userMock.id}`],
       });
 
-    const [{ firstElementChild: firstUserLink }] = await waitFor(() =>
-      getAllByTestId("userItem")
-    );
+    const [firstUserLink] = await waitFor(() => getAllByTestId("userItem"));
 
     const userPage = await waitFor(() => getByTestId("userPage"));
     expect(userPage).toBeInTheDocument();
