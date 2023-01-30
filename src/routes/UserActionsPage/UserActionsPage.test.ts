@@ -71,15 +71,15 @@ describe("User actions page", () => {
     expect(cityInput).toBeRequired();
     expect(zipcodeInput).toBeRequired();
 
-    expect(nameInput).toBeEmpty();
-    expect(usernameInput).toBeEmpty();
-    expect(emailInput).toBeEmpty();
-    expect(phoneInput).toBeEmpty();
-    expect(websiteInput).toBeEmpty();
-    expect(streetInput).toBeEmpty();
-    expect(suiteInput).toBeEmpty();
-    expect(cityInput).toBeEmpty();
-    expect(zipcodeInput).toBeEmpty();
+    expect(nameInput).toBeEmptyDOMElement();
+    expect(usernameInput).toBeEmptyDOMElement();
+    expect(emailInput).toBeEmptyDOMElement();
+    expect(phoneInput).toBeEmptyDOMElement();
+    expect(websiteInput).toBeEmptyDOMElement();
+    expect(streetInput).toBeEmptyDOMElement();
+    expect(suiteInput).toBeEmptyDOMElement();
+    expect(cityInput).toBeEmptyDOMElement();
+    expect(zipcodeInput).toBeEmptyDOMElement();
 
     userEvent.type(nameInput, newUserMock.name);
     userEvent.type(usernameInput, newUserMock.username);

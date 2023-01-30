@@ -65,8 +65,8 @@ describe("Post Actions Page", () => {
     expect(postNewTitle).toBeInTheDocument();
     expect(titleInput).toBeInTheDocument();
     expect(bodyInput).toBeInTheDocument();
-    expect(titleInput).toBeEmpty();
-    expect(bodyInput).toBeEmpty();
+    expect(titleInput).toBeEmptyDOMElement();
+    expect(bodyInput).toBeEmptyDOMElement();
     expect(titleInput).toBeRequired();
     expect(bodyInput).toBeRequired();
 
