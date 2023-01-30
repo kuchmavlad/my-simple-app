@@ -45,3 +45,18 @@ export const renderWithRouterAndProvider = (
     </AuthProvider>
   );
 };
+
+export const rerenderWithRouterAndCustomProviderState = (
+  rerender: (ui: React.ReactElement) => void,
+  providerState: AuthInitialStateProps,
+  routes?: RouteObject[],
+  opts?: MemoryRoutOptionsType
+) => {
+  const router = createMemoryRouter(routes || routesConfig, opts);
+
+  return rerender(
+    <AuthContext.Provider value={providerState}>
+      <RouterProvider router={router} />
+    </AuthContext.Provider>
+  );
+};

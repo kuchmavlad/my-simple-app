@@ -20,7 +20,7 @@ export const UsersList: React.FC = () => {
               }
             >
               {name}
-              {favorite && <span data-testid="testTEst">★</span>}
+              {favorite && <span data-testid="favoriteIcon">★</span>}
             </NavLink>
           ))}
         </nav>
