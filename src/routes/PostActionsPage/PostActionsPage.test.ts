@@ -7,8 +7,10 @@ import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import {
   setupPostDeleteHandlers,
   setupPostEditHandlers,
-  setupPostsNewHandlers,
-  setupSinglePostHandlers,
+  setupPostNewHandlers,
+  setupPostHandlers,
+  setupPostCommentsHandlers,
+  setupPostsHandlers,
 } from "tests/mswHandlers";
 
 import "tests/setupTests";
@@ -17,7 +19,8 @@ describe("Post Actions Page", () => {
   it("should edit post", async () => {
     const { id: mockPostId, title: mockPostTitle, body } = postsMock[0];
     const { id: userId } = authContextStateMock.user;
-    setupSinglePostHandlers(mockPostId);
+    setupPostsHandlers();
+    setupPostHandlers(mockPostId);
     setupPostEditHandlers(mockPostId);
 
     const { getByText, getByPlaceholderText } =
@@ -46,7 +49,8 @@ describe("Post Actions Page", () => {
   });
 
   it("should create new post", async () => {
-    setupPostsNewHandlers();
+    setupPostsHandlers();
+    setupPostNewHandlers();
 
     const { getByText, getByPlaceholderText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
@@ -83,6 +87,8 @@ describe("Post Actions Page", () => {
   });
 
   it("should rout back to posts page", async () => {
+    setupPostsHandlers();
+
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
@@ -106,7 +112,9 @@ describe("Post Actions Page", () => {
 
   it("shouldn't delete post after cancellation", async () => {
     const { id: mockPostId } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
+    setupPostsHandlers();
+    setupPostCommentsHandlers(mockPostId);
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
@@ -129,7 +137,9 @@ describe("Post Actions Page", () => {
 
   it("should delete post after confirmation", async () => {
     const { id: mockPostId } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
+    setupPostsHandlers();
+    setupPostCommentsHandlers(mockPostId);
     setupPostDeleteHandlers(mockPostId);
 
     const { getByText } = renderWithRouterAndCustomProviderState(

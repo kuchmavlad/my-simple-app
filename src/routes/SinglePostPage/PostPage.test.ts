@@ -10,7 +10,7 @@ import { authContextStateMock, commentsMock, postsMock } from "tests/moks";
 import {
   setupPostCommentsEmptyHandlers,
   setupPostCommentsHandlers,
-  setupSinglePostHandlers,
+  setupPostHandlers,
 } from "tests/mswHandlers";
 
 import "tests/setupTests";
@@ -18,7 +18,7 @@ import "tests/setupTests";
 describe("Single post page", () => {
   it("should render single post page with comments", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
     setupPostCommentsHandlers(mockPostId);
 
     const { getByText, queryAllByTestId } = renderWithRouter(undefined, {
@@ -34,7 +34,7 @@ describe("Single post page", () => {
 
   it("should render single post page without comments", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
     setupPostCommentsEmptyHandlers(mockPostId);
 
     const { getByText, queryAllByTestId } = renderWithRouter(undefined, {
@@ -52,7 +52,8 @@ describe("Single post page", () => {
 
   it("should have edit/delete button", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
+    setupPostCommentsHandlers(mockPostId);
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
@@ -73,7 +74,8 @@ describe("Single post page", () => {
 
   it("should rout to edit post page", async () => {
     const { id: mockPostId } = postsMock[0];
-    setupSinglePostHandlers(mockPostId);
+    setupPostHandlers(mockPostId);
+    setupPostCommentsHandlers(mockPostId);
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,

@@ -7,6 +7,9 @@ import {
   renderWithRouterAndCustomProviderState,
 } from "./utils";
 import { authContextStateMock } from "./moks";
+import { setupPostsHandlers, setupUsersHandlers } from "./mswHandlers";
+
+import "./setupTests";
 
 describe("render app", () => {
   it("should render on home page", () => {
@@ -21,6 +24,8 @@ describe("render app", () => {
 
 describe("routing", () => {
   it("should rout to posts page", async () => {
+    setupPostsHandlers();
+
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const postsLink = getByText("Posts");
@@ -37,6 +42,8 @@ describe("routing", () => {
   });
 
   it("should rout to login page without authorization", async () => {
+    setupUsersHandlers();
+
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
     const usersLink = getByText("Users");
@@ -47,6 +54,7 @@ describe("routing", () => {
     expect(homeLink).toHaveClass("active");
 
     userEvent.click(usersLink);
+
     const loginTitle = await waitFor(() => getByText(/login page/i));
 
     expect(loginTitle).toBeInTheDocument();
@@ -54,8 +62,11 @@ describe("routing", () => {
   });
 
   it("should rout to users page with authorization", async () => {
+    setupUsersHandlers();
+
     const { getByText } =
       renderWithRouterAndCustomProviderState(authContextStateMock);
+
     const homeTitle = getByText(/my simple app/i);
     const usersLink = getByText("Users");
     const homeLink = getByText("Home");
@@ -64,9 +75,10 @@ describe("routing", () => {
     expect(homeLink).toHaveClass("active");
 
     userEvent.click(usersLink);
-    const userTitle = await waitFor(() => getByText(/users page/i));
 
-    expect(userTitle).toBeInTheDocument();
+    const usersTitle = await waitFor(() => getByText(/users page/i));
+
+    expect(usersTitle).toBeInTheDocument();
     expect(usersLink).toHaveClass("active");
   });
 

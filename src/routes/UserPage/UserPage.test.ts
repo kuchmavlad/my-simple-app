@@ -3,6 +3,7 @@ import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
+  setupPostsHandlers,
   setupUserFavoriteHandlers,
   setupUserHandlers,
   setupUsersHandlers,
@@ -76,6 +77,7 @@ describe("User page", () => {
     expect(editUserTitle).toBeInTheDocument();
   });
   it("should rout to posts page", async () => {
+    setupPostsHandlers();
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
 
