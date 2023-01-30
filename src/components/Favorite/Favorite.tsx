@@ -12,6 +12,7 @@ export const Favorite: React.FC<FavoriteProps> = ({ favorite }) => {
   return (
     <Form method={FORM_METHODS.POST} id="favorite">
       <button
+        data-testid="favorite"
         name="favorite"
         value={favorite ? "false" : "true"}
         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
