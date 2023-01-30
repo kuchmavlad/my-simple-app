@@ -2,9 +2,21 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { setupUserHandlers, setupUsersHandlers } from "tests/mswHandlers";
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
-import { authContextStateMock, userMock } from "tests/moks";
+import {
+  setupUserFavoriteHandlers,
+  setupUserHandlers,
+  setupUsersHandlers,
+} from "tests/mswHandlers";
+import {
+  renderWithRouterAndCustomProviderState,
+  rerenderWithRouterAndCustomProviderState,
+} from "tests/utils";
+import {
+  authContextStateMock,
+  favoriteUser,
+  favoriteUsersMock,
+  userMock,
+} from "tests/moks";
 
 import "tests/setupTests";
 
@@ -82,5 +94,46 @@ describe("User page", () => {
     const postsPageTitle = await waitFor(() => getByText(/posts page/i));
 
     expect(postsPageTitle).toBeInTheDocument();
+  });
+  it("should choose favorite user", async () => {
+    setupUsersHandlers();
+    setupUserHandlers(userMock.id);
+    setupUserFavoriteHandlers(userMock.id);
+
+    const { getAllByTestId, getByTestId, rerender } =
+      renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
+        initialEntries: [`/users/${userMock.id}`],
+      });
+
+    const favoriteButton = await waitFor(() => getByTestId("favorite"));
+    const usersList = await waitFor(() => getAllByTestId("userItem"));
+    const [firstUser] = usersList;
+    const firstUserIcon = firstUser.lastElementChild;
+
+    expect(firstUserIcon).not.toBeInTheDocument();
+    expect(favoriteButton).toBeInTheDocument();
+    expect(favoriteButton).toHaveValue("true");
+
+    setupUsersHandlers(favoriteUsersMock);
+    setupUserHandlers(userMock.id, favoriteUser);
+
+    userEvent.click(favoriteButton);
+
+    rerenderWithRouterAndCustomProviderState(
+      rerender,
+      authContextStateMock,
+      undefined,
+      {
+        initialEntries: [`/users/${userMock.id}`],
+      }
+    );
+
+    const rerenderUsersList = await waitFor(() => getAllByTestId("userItem"));
+    const rerenderFavoriteButton = await waitFor(() => getByTestId("favorite"));
+    const [rerenderFirstUser] = rerenderUsersList;
+    const rerenderFirstUserIcon = rerenderFirstUser.lastElementChild;
+
+    expect(rerenderFirstUserIcon).toBeInTheDocument();
+    expect(rerenderFavoriteButton).toHaveValue("false");
   });
 });

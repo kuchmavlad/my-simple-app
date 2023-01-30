@@ -4,6 +4,7 @@ import { server } from "./server";
 import {
   commentsMock,
   editedUserMock,
+  favoriteUser,
   newUserMock,
   postsEmptyMock,
   postsLimitedMock,
@@ -114,6 +115,14 @@ export const setupUserHandlers = (
   server.use(
     rest.get(`${ENDPOINT_PATH.USERS}/${userId}`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(updatedUserMock ?? userMock));
+    })
+  );
+};
+
+export const setupUserFavoriteHandlers = (userId: number) => {
+  server.use(
+    rest.patch(`${ENDPOINT_PATH.USERS}/${userId}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(favoriteUser));
     })
   );
 };

@@ -206,6 +206,7 @@ export const usersMock = [
   },
 ];
 export const [userMock] = usersMock;
+export const favoriteUser = { ...userMock, favorite: true };
 export const newUserMock = {
   name: "2",
   username: "2",
@@ -221,6 +222,7 @@ export const newUserMock = {
   id: 999,
 };
 export const updatedUsersMock = [...usersMock, newUserMock];
+export const favoriteUsersMock = [favoriteUser, ...usersMock];
 export const editedUserMock = { ...newUserMock, id: 1 };
 export const [, ...restUsers] = usersMock;
 export const editedUsersMock = [editedUserMock, ...restUsers];
