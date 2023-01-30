@@ -35,7 +35,7 @@ describe("Login page", () => {
     const homeLink = getByText(/home/i);
 
     expect(emailInput).toBeInTheDocument();
-    expect(emailInput).toBeEmpty();
+    expect(emailInput).toBeEmptyDOMElement();
     expect(homeLink).toBeInTheDocument();
     expect(homeLink).not.toHaveClass("active");
 
@@ -66,7 +66,7 @@ describe("Login page", () => {
     const usersLink = getByText(/users/i);
 
     expect(emailInput).toBeInTheDocument();
-    expect(emailInput).toBeEmpty();
+    expect(emailInput).toBeEmptyDOMElement();
     expect(usersLink).toBeInTheDocument();
     expect(usersLink).not.toHaveClass("active");
 
@@ -92,7 +92,7 @@ describe("Login page", () => {
     const loginLink = getByTestId("loginLink");
 
     expect(emailInput).toBeInTheDocument();
-    expect(emailInput).toBeEmpty();
+    expect(emailInput).toBeEmptyDOMElement();
     expect(loginLink).toBeInTheDocument();
 
     userEvent.type(emailInput, userMock.email);
@@ -120,7 +120,7 @@ describe("Login page", () => {
     const loginButton = getByTestId("loginButton");
 
     expect(emailInput).toBeInTheDocument();
-    expect(emailInput).toBeEmpty();
+    expect(emailInput).toBeEmptyDOMElement();
 
     userEvent.type(emailInput, nonExistentEmail);
     expect(emailInput).toHaveValue(nonExistentEmail);

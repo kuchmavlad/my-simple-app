@@ -16,7 +16,8 @@ import {
   setupPostsEmptyHandlers,
   setupPostsHandlers,
   setupPostsLimitedHandlers,
-  setupSinglePostHandlers,
+  setupPostHandlers,
+  setupPostCommentsHandlers,
 } from "tests/mswHandlers";
 import { PATHS } from "../../constants";
 
@@ -52,14 +53,15 @@ describe("posts page", () => {
   });
 
   it("should render posts page with limited posts", async () => {
+    setupPostsHandlers();
+    setupPostsLimitedHandlers();
+
     const { findByRole, getAllByTestId } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
     });
 
     const checkbox = await findByRole("checkbox");
     expect(checkbox).not.toBeChecked();
-
-    setupPostsLimitedHandlers();
 
     await waitFor(() => {
       userEvent.click(checkbox);
@@ -76,6 +78,8 @@ describe("posts page", () => {
   });
 
   it("should rout to login page without authorization", async () => {
+    setupPostsHandlers();
+
     const { getByText } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
     });
@@ -90,6 +94,8 @@ describe("posts page", () => {
   });
 
   it("should rout to action post page with authorization", async () => {
+    setupPostsHandlers();
+
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
       undefined,
@@ -109,6 +115,8 @@ describe("posts page", () => {
 
   it("should rout to single post page", async () => {
     setupPostsHandlers();
+    setupPostHandlers(postsMock[0].id);
+    setupPostCommentsHandlers(postsMock[0].id);
 
     const { getAllByTestId, getByText } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
@@ -119,8 +127,6 @@ describe("posts page", () => {
     expect(posts).toHaveLength(postsMock.length);
 
     userEvent.click(posts[0]);
-
-    setupSinglePostHandlers(postsMock[0].id);
 
     const commentsTitle = await waitFor(() => getByText(/comments/i));
     const postBodyText = await waitFor(() => getByText(postsMock[0].body));

@@ -17,6 +17,7 @@ import {
 import { ENDPOINT_PATH } from "../constants";
 import { UserItem } from "../dtos";
 
+// Posts Handlers
 export const setupPostsHandlers = () => {
   server.use(
     rest.get(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
@@ -41,7 +42,8 @@ export const setupPostsLimitedHandlers = () => {
   );
 };
 
-export const setupSinglePostHandlers = (postId: number) => {
+// Post Handlers
+export const setupPostHandlers = (postId: number) => {
   server.use(
     rest.get(`${ENDPOINT_PATH.POSTS}/${postId}`, (req, res, ctx) => {
       return res(
@@ -52,18 +54,10 @@ export const setupSinglePostHandlers = (postId: number) => {
   );
 };
 
-export const setupPostCommentsHandlers = (postId: number) => {
+export const setupPostNewHandlers = () => {
   server.use(
-    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(commentsMock));
-    })
-  );
-};
-
-export const setupPostCommentsEmptyHandlers = (postId: number) => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json([]));
+    rest.post(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
+      return res(ctx.status(201), ctx.json({}));
     })
   );
 };
@@ -84,14 +78,24 @@ export const setupPostEditHandlers = (postId: number) => {
   );
 };
 
-export const setupPostsNewHandlers = () => {
+// Comments Handlers
+export const setupPostCommentsHandlers = (postId: number) => {
   server.use(
-    rest.post(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
-      return res(ctx.status(201), ctx.json({}));
+    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(commentsMock));
     })
   );
 };
 
+export const setupPostCommentsEmptyHandlers = (postId: number) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json([]));
+    })
+  );
+};
+
+// User Handlers
 export const setupUserLoginHandlers = (userEmail: string) => {
   server.use(
     rest.get(`${ENDPOINT_PATH.USERS}?email=${userEmail}`, (req, res, ctx) => {
@@ -127,30 +131,6 @@ export const setupUserFavoriteHandlers = (userId: number) => {
   );
 };
 
-export const setupUsersHandlers = (updatedUsersMock?: UserItem[]) => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(updatedUsersMock ?? usersMock));
-    })
-  );
-};
-
-export const setupUsersPostHandlers = () => {
-  server.use(
-    rest.post(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(201), ctx.json(newUserMock));
-    })
-  );
-};
-
-export const setupUsersUpdatedHandlers = () => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(updatedUsersMock));
-    })
-  );
-};
-
 export const setupNewUserHandlers = (userId: number) => {
   server.use(
     rest.get(`${ENDPOINT_PATH.USERS}/${userId}`, (req, res, ctx) => {
@@ -171,6 +151,31 @@ export const setupUserDeleteHandlers = (userId: number) => {
   server.use(
     rest.delete(`${ENDPOINT_PATH.USERS}/${userId}`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({}));
+    })
+  );
+};
+
+// Users Handlers
+export const setupUsersHandlers = (updatedUsersMock?: UserItem[]) => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(updatedUsersMock ?? usersMock));
+    })
+  );
+};
+
+export const setupUsersPostHandlers = () => {
+  server.use(
+    rest.post(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
+      return res(ctx.status(201), ctx.json(newUserMock));
+    })
+  );
+};
+
+export const setupUsersUpdatedHandlers = () => {
+  server.use(
+    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(updatedUsersMock));
     })
   );
 };
