@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import {
   setupEditedUserHandlers,
-  setupNewUserHandlers,
   setupUserDeleteHandlers,
   setupUserHandlers,
   setupUsersHandlers,
@@ -28,7 +27,7 @@ describe("User actions page", () => {
     setupUsersHandlers();
     setupUsersPostHandlers();
     setupUsersUpdatedHandlers();
-    setupNewUserHandlers(newUserMock.id);
+    setupUserHandlers(newUserMock.id, newUserMock);
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {

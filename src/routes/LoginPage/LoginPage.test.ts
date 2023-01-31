@@ -4,11 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 import { userMock } from "tests/moks";
 import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
-import {
-  setupUserLoginEmptyHandlers,
-  setupUserLoginHandlers,
-  setupUsersHandlers,
-} from "tests/mswHandlers";
+import { setupUserLoginHandlers, setupUsersHandlers } from "tests/mswHandlers";
 
 import "tests/setupTests";
 
@@ -25,7 +21,7 @@ describe("Login page", () => {
   });
 
   it("should redirect to home page after login", async () => {
-    setupUserLoginHandlers(userMock.email);
+    setupUserLoginHandlers();
 
     const { getByPlaceholderText, getByTestId, getByText } =
       renderWithRouterAndProvider(undefined, { initialEntries: ["/login"] });
@@ -51,7 +47,7 @@ describe("Login page", () => {
   });
 
   it("should redirect to previous page after login", async () => {
-    setupUserLoginHandlers(userMock.email);
+    setupUserLoginHandlers();
     setupUsersHandlers();
 
     const { getByPlaceholderText, getByTestId, getByText } =
@@ -82,7 +78,7 @@ describe("Login page", () => {
   });
 
   it("should change login to icon after login", async () => {
-    setupUserLoginHandlers(userMock.email);
+    setupUserLoginHandlers();
 
     const { getByPlaceholderText, getByTestId, getByText } =
       renderWithRouterAndProvider(undefined, { initialEntries: ["/login"] });
@@ -109,7 +105,7 @@ describe("Login page", () => {
 
   it("should show 'not found' error", async () => {
     const nonExistentEmail = "test@email.com";
-    setupUserLoginEmptyHandlers(nonExistentEmail);
+    setupUserLoginHandlers([]);
 
     const { getByPlaceholderText, getByTestId } = renderWithRouterAndProvider(
       undefined,

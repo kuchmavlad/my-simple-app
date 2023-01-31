@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { waitFor, screen } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
@@ -29,8 +29,6 @@ describe("Single post page", () => {
 
     expect(postTitle).toBeInTheDocument();
     expect(comments).toHaveLength(commentsMock.length);
-
-    screen.debug();
   });
 
   it("should render single post page without comments", async () => {
