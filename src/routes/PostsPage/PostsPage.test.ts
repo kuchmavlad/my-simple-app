@@ -21,7 +21,7 @@ import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
-describe("posts page", () => {
+describe("Posts page", () => {
   it("should render posts page with posts", async () => {
     setupPostsHandlers();
 

@@ -8,7 +8,7 @@ import { authContextStateMock, usersMock, userMock } from "tests/moks";
 
 import "tests/setupTests";
 
-describe("Search component", () => {
+describe("User search component", () => {
   it("should render component", async () => {
     setupUsersHandlers();
 

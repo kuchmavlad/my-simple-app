@@ -11,7 +11,7 @@ import { setupPostsHandlers, setupUsersHandlers } from "./mswHandlers";
 
 import "./setupTests";
 
-describe("render app", () => {
+describe("Render app", () => {
   it("should render on home page", () => {
     const { getByText } = renderWithRouter();
     const homeTitle = getByText(/my simple app/i);
@@ -22,7 +22,7 @@ describe("render app", () => {
   });
 });
 
-describe("routing", () => {
+describe("Routing", () => {
   it("should rout to posts page", async () => {
     setupPostsHandlers();
 
