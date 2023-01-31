@@ -50,7 +50,14 @@ export const UserSearch: React.FC = () => {
         defaultValue={q}
         onChange={onChangeHandle}
       />
-      <div id="search-spinner" aria-hidden hidden={!searching} />
+      {!!searching && (
+        <div
+          data-testid="search-spinner"
+          id="search-spinner"
+          aria-hidden
+          hidden={!searching}
+        />
+      )}
     </Form>
   );
 };

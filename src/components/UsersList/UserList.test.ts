@@ -3,7 +3,7 @@ import { getAllByTestId, waitFor } from "@testing-library/react";
 
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import { authContextStateMock, usersMock } from "tests/moks";
-import { setupUsersEmptyHandlers, setupUsersHandlers } from "tests/mswHandlers";
+import { setupUsersHandlers } from "tests/mswHandlers";
 
 import "tests/setupTests";
 
@@ -24,7 +24,7 @@ describe("Users list component", () => {
     expect(firstUserElement).toBeInTheDocument();
   });
   it("should render list without users", async () => {
-    setupUsersEmptyHandlers();
+    setupUsersHandlers([]);
 
     const { getByText, queryAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {

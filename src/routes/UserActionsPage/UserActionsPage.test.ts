@@ -9,7 +9,6 @@ import {
   setupUserHandlers,
   setupUsersHandlers,
   setupUsersPostHandlers,
-  setupUsersUpdatedHandlers,
 } from "tests/mswHandlers";
 import {
   authContextStateMock,
@@ -17,7 +16,9 @@ import {
   editedUsersMock,
   newUserMock,
   restUsers,
+  updatedUsersMock,
   userMock,
+  usersMock,
 } from "tests/moks";
 
 import "tests/setupTests";
@@ -26,7 +27,6 @@ describe("User actions page", () => {
   it("should create new user", async () => {
     setupUsersHandlers();
     setupUsersPostHandlers();
-    setupUsersUpdatedHandlers();
     setupUserHandlers(newUserMock.id, newUserMock);
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
@@ -36,9 +36,11 @@ describe("User actions page", () => {
 
     const newUserPageTitle = await waitFor(() => getByText(/user new/i));
     const saveButton = await waitFor(() => getByText("Save"));
+    const usersList = await waitFor(() => getAllByTestId("userItem"));
 
     expect(newUserPageTitle).toBeInTheDocument();
     expect(saveButton).toBeInTheDocument();
+    expect(usersList).toHaveLength(usersMock.length);
 
     const nameInput = getByPlaceholderText("Name");
     const usernameInput = getByPlaceholderText("Username");
@@ -90,12 +92,15 @@ describe("User actions page", () => {
     userEvent.type(cityInput, newUserMock.address.city);
     userEvent.type(zipcodeInput, newUserMock.address.zipcode);
 
+    setupUsersHandlers(updatedUsersMock);
+
     userEvent.click(saveButton);
 
     const userPage = await waitFor(() => getByTestId("userPage"));
-    const usersList = await waitFor(() => getAllByTestId("userItem"));
-    const [lastUser] = usersList.reverse();
+    const usersListUpdated = await waitFor(() => getAllByTestId("userItem"));
+    const [lastUser] = usersListUpdated.reverse();
 
+    expect(usersListUpdated).toHaveLength(updatedUsersMock.length);
     expect(userPage).toBeInTheDocument();
     expect(lastUser).toHaveClass("active");
     expect(lastUser).toHaveTextContent(newUserMock.name);

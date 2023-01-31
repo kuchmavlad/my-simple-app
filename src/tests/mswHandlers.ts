@@ -8,7 +8,6 @@ import {
   newUserMock,
   postsLimitedMock,
   postsMock,
-  updatedUsersMock,
   userMock,
   usersMock,
 } from "./moks";
@@ -116,10 +115,14 @@ export const setupUserDeleteHandlers = (userId: number) => {
 };
 
 // Users Handlers
-export const setupUsersHandlers = (updatedUsersMock?: UserItem[]) => {
+export const setupUsersHandlers = (customMock?: UserItem[]) => {
   server.use(
     rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(updatedUsersMock ?? usersMock));
+      const q = req.url.searchParams.get("q");
+      return res(
+        ctx.status(200),
+        ctx.json(customMock ? customMock : q ? [userMock] : usersMock)
+      );
     })
   );
 };
@@ -128,38 +131,6 @@ export const setupUsersPostHandlers = () => {
   server.use(
     rest.post(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
       return res(ctx.status(201), ctx.json(newUserMock));
-    })
-  );
-};
-
-export const setupUsersUpdatedHandlers = () => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(updatedUsersMock));
-    })
-  );
-};
-
-export const setupUsersEmptyHandlers = () => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json([]));
-    })
-  );
-};
-
-export const setupUsersFilterHandlers = (inputText: string) => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}?q=${inputText}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json([userMock]));
-    })
-  );
-};
-
-export const setupUsersFilterEmptyHandlers = (inputText: string) => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.USERS}?q=${inputText}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json([]));
     })
   );
 };
