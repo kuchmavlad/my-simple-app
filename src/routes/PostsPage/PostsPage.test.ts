@@ -13,9 +13,7 @@ import {
   postsMock,
 } from "tests/moks";
 import {
-  setupPostsEmptyHandlers,
   setupPostsHandlers,
-  setupPostsLimitedHandlers,
   setupPostHandlers,
   setupPostCommentsHandlers,
 } from "tests/mswHandlers";
@@ -39,7 +37,7 @@ describe("posts page", () => {
   });
 
   it("should render posts page without posts", async () => {
-    setupPostsEmptyHandlers();
+    setupPostsHandlers([]);
 
     const { queryAllByTestId, getByText } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
@@ -54,7 +52,6 @@ describe("posts page", () => {
 
   it("should render posts page with limited posts", async () => {
     setupPostsHandlers();
-    setupPostsLimitedHandlers();
 
     const { findByRole, getAllByTestId } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
@@ -116,7 +113,7 @@ describe("posts page", () => {
   it("should rout to single post page", async () => {
     setupPostsHandlers();
     setupPostHandlers(postsMock[0].id);
-    setupPostCommentsHandlers(postsMock[0].id);
+    setupPostCommentsHandlers();
 
     const { getAllByTestId, getByText } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],

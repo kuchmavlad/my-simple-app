@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { waitFor } from "@testing-library/react";
+import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
@@ -8,7 +8,6 @@ import {
 } from "tests/utils";
 import { authContextStateMock, commentsMock, postsMock } from "tests/moks";
 import {
-  setupPostCommentsEmptyHandlers,
   setupPostCommentsHandlers,
   setupPostHandlers,
 } from "tests/mswHandlers";
@@ -19,7 +18,7 @@ describe("Single post page", () => {
   it("should render single post page with comments", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
     setupPostHandlers(mockPostId);
-    setupPostCommentsHandlers(mockPostId);
+    setupPostCommentsHandlers();
 
     const { getByText, queryAllByTestId } = renderWithRouter(undefined, {
       initialEntries: [`/post/${mockPostId}`],
@@ -30,12 +29,14 @@ describe("Single post page", () => {
 
     expect(postTitle).toBeInTheDocument();
     expect(comments).toHaveLength(commentsMock.length);
+
+    screen.debug();
   });
 
   it("should render single post page without comments", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
     setupPostHandlers(mockPostId);
-    setupPostCommentsEmptyHandlers(mockPostId);
+    setupPostCommentsHandlers([]);
 
     const { getByText, queryAllByTestId } = renderWithRouter(undefined, {
       initialEntries: [`/post/${mockPostId}`],
@@ -53,7 +54,7 @@ describe("Single post page", () => {
   it("should have edit/delete button", async () => {
     const { id: mockPostId, title: mockPostTitle } = postsMock[0];
     setupPostHandlers(mockPostId);
-    setupPostCommentsHandlers(mockPostId);
+    setupPostCommentsHandlers();
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
@@ -75,7 +76,7 @@ describe("Single post page", () => {
   it("should rout to edit post page", async () => {
     const { id: mockPostId } = postsMock[0];
     setupPostHandlers(mockPostId);
-    setupPostCommentsHandlers(mockPostId);
+    setupPostCommentsHandlers();
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,

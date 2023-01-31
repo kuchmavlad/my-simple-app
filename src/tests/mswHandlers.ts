@@ -6,7 +6,6 @@ import {
   editedUserMock,
   favoriteUser,
   newUserMock,
-  postsEmptyMock,
   postsLimitedMock,
   postsMock,
   updatedUsersMock,
@@ -15,29 +14,17 @@ import {
 } from "./moks";
 
 import { ENDPOINT_PATH } from "../constants";
-import { UserItem } from "../dtos";
+import { CommentType, PostsItem, UserItem } from "../dtos";
 
 // Posts Handlers
-export const setupPostsHandlers = () => {
+export const setupPostsHandlers = (customMock?: PostsItem[]) => {
   server.use(
     rest.get(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(postsMock));
-    })
-  );
-};
-
-export const setupPostsEmptyHandlers = () => {
-  server.use(
-    rest.get(ENDPOINT_PATH.POSTS, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(postsEmptyMock));
-    })
-  );
-};
-
-export const setupPostsLimitedHandlers = () => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.POSTS}?_limit=10`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(postsLimitedMock));
+      const limit = req.url.searchParams.get("_limit");
+      return res(
+        ctx.status(200),
+        ctx.json(customMock ? customMock : limit ? postsLimitedMock : postsMock)
+      );
     })
   );
 };
@@ -79,18 +66,10 @@ export const setupPostEditHandlers = (postId: number) => {
 };
 
 // Comments Handlers
-export const setupPostCommentsHandlers = (postId: number) => {
+export const setupPostCommentsHandlers = (customMock?: CommentType[]) => {
   server.use(
-    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(commentsMock));
-    })
-  );
-};
-
-export const setupPostCommentsEmptyHandlers = (postId: number) => {
-  server.use(
-    rest.get(`${ENDPOINT_PATH.COMMENTS}?postId=${postId}`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json([]));
+    rest.get(`${ENDPOINT_PATH.COMMENTS}`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(customMock ?? commentsMock));
     })
   );
 };
