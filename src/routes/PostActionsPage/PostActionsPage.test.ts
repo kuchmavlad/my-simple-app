@@ -114,7 +114,7 @@ describe("Post Actions Page", () => {
     const { id: mockPostId } = postsMock[0];
     setupPostHandlers(mockPostId);
     setupPostsHandlers();
-    setupPostCommentsHandlers(mockPostId);
+    setupPostCommentsHandlers();
 
     const { getByText } = renderWithRouterAndCustomProviderState(
       authContextStateMock,
@@ -139,7 +139,7 @@ describe("Post Actions Page", () => {
     const { id: mockPostId } = postsMock[0];
     setupPostHandlers(mockPostId);
     setupPostsHandlers();
-    setupPostCommentsHandlers(mockPostId);
+    setupPostCommentsHandlers();
     setupPostDeleteHandlers(mockPostId);
 
     const { getByText } = renderWithRouterAndCustomProviderState(
