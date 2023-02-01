@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 import { authContextStateMock, postsMock } from "tests/moks";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { PATHS } from "../../constants";
 import {
   setupPostDeleteHandlers,
   setupPostEditHandlers,
@@ -25,7 +26,7 @@ describe("Post Actions Page", () => {
 
     const { getByText, getByPlaceholderText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/post/${userId}/${mockPostId}/edit`],
+        initialEntries: [`/post/${userId}/${mockPostId}/${PATHS.EDIT}`],
       });
 
     const postEditTitle = await waitFor(() => getByText(/edit post/i));
@@ -54,7 +55,7 @@ describe("Post Actions Page", () => {
 
     const { getByText, getByPlaceholderText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/post/new"],
+        initialEntries: [`/${PATHS.POST_NEW}`],
       });
 
     const postNewTitle = getByText(/new post/i);
@@ -93,7 +94,7 @@ describe("Post Actions Page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/posts", "/post/new"],
+        initialEntries: [`/${PATHS.POSTS}`, `/${PATHS.POST_NEW}`],
       }
     );
 

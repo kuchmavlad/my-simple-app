@@ -3,6 +3,7 @@ import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { PATHS } from "../../constants";
 import {
   setupEditedUserHandlers,
   setupUserDeleteHandlers,
@@ -31,7 +32,7 @@ describe("User actions page", () => {
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${newUserMock.id}/new`],
+        initialEntries: [`/users/${newUserMock.id}/${PATHS.NEW}`],
       });
 
     const newUserPageTitle = await waitFor(() => getByText(/user new/i));
@@ -112,7 +113,7 @@ describe("User actions page", () => {
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}/edit`],
+        initialEntries: [`/users/${userMock.id}/${PATHS.EDIT}`],
       });
 
     const newUserPageTitle = await waitFor(() => getByText(/user edit/i));
@@ -196,7 +197,7 @@ describe("User actions page", () => {
     window.confirm = jest.fn(() => true);
     const { getByText, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const deleteButton = await waitFor(() => getByText("Delete"));
@@ -223,7 +224,10 @@ describe("User actions page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`, `/users/${userMock.id}/edit`],
+        initialEntries: [
+          `/${PATHS.USERS}/${userMock.id}`,
+          `/${PATHS.USERS}/${userMock.id}/${PATHS.EDIT}`,
+        ],
       }
     );
 

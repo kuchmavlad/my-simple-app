@@ -5,13 +5,14 @@ import userEvent from "@testing-library/user-event";
 import { userMock } from "tests/moks";
 import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
 import { setupUserLoginHandlers, setupUsersHandlers } from "tests/mswHandlers";
+import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
 describe("Login page", () => {
   it("should render login page", () => {
     const { getByText, getByTestId } = renderWithRouter(undefined, {
-      initialEntries: ["/login"],
+      initialEntries: [PATHS.LOGIN],
     });
     const loginPageTitle = getByText(/login page/i);
     const loginLink = getByTestId("loginLink");
@@ -24,7 +25,7 @@ describe("Login page", () => {
     setupUserLoginHandlers();
 
     const { getByPlaceholderText, getByTestId, getByText } =
-      renderWithRouterAndProvider(undefined, { initialEntries: ["/login"] });
+      renderWithRouterAndProvider(undefined, { initialEntries: [PATHS.LOGIN] });
 
     const emailInput = getByPlaceholderText(/example@.com/i);
     const loginButton = getByTestId("loginButton");
@@ -52,7 +53,7 @@ describe("Login page", () => {
 
     const { getByPlaceholderText, getByTestId, getByText } =
       renderWithRouterAndProvider(undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const emailInput = await waitFor(() =>
@@ -81,7 +82,7 @@ describe("Login page", () => {
     setupUserLoginHandlers();
 
     const { getByPlaceholderText, getByTestId, getByText } =
-      renderWithRouterAndProvider(undefined, { initialEntries: ["/login"] });
+      renderWithRouterAndProvider(undefined, { initialEntries: [PATHS.LOGIN] });
 
     const emailInput = getByPlaceholderText(/example@.com/i);
     const loginButton = getByTestId("loginButton");
@@ -109,7 +110,7 @@ describe("Login page", () => {
 
     const { getByPlaceholderText, getByTestId } = renderWithRouterAndProvider(
       undefined,
-      { initialEntries: ["/login"] }
+      { initialEntries: [PATHS.LOGIN] }
     );
 
     const emailInput = getByPlaceholderText(/example@.com/i);

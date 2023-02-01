@@ -5,6 +5,7 @@ import { waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import { setupUsersHandlers } from "tests/mswHandlers";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import { authContextStateMock, usersMock, userMock } from "tests/moks";
+import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
@@ -16,7 +17,7 @@ describe("User search component", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       }
     );
 
@@ -29,7 +30,7 @@ describe("User search component", () => {
 
     const { queryAllByTestId, getByPlaceholderText, getByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const searchInput = await waitFor(() => getByPlaceholderText("Search"));
@@ -53,7 +54,7 @@ describe("User search component", () => {
 
     const { queryAllByTestId, getByPlaceholderText, getByText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const searchInput = await waitFor(() => getByPlaceholderText("Search"));

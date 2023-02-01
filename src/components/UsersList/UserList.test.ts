@@ -4,6 +4,7 @@ import { getAllByTestId, waitFor } from "@testing-library/react";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import { authContextStateMock, usersMock } from "tests/moks";
 import { setupUsersHandlers } from "tests/mswHandlers";
+import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
@@ -13,7 +14,7 @@ describe("Users list component", () => {
 
     const { getAllByTestId, getByText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const usersList = await waitFor(() => getAllByTestId("userItem"));
@@ -28,7 +29,7 @@ describe("Users list component", () => {
 
     const { getByText, queryAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const usersList = await waitFor(() => queryAllByTestId("userItem"));

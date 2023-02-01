@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { PATHS } from "../../constants";
 import {
   setupPostsHandlers,
   setupUserFavoriteHandlers,
@@ -28,7 +29,7 @@ describe("User page", () => {
 
     const { getAllByTestId, getByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const [firstUserLink] = await waitFor(() => getAllByTestId("userItem"));
@@ -44,7 +45,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       }
     );
 
@@ -64,7 +65,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
@@ -85,7 +86,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
@@ -104,7 +105,7 @@ describe("User page", () => {
 
     const { getAllByTestId, getByTestId, rerender } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const favoriteButton = await waitFor(() => getByTestId("favorite"));
@@ -126,7 +127,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
