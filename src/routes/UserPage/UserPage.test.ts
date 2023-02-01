@@ -38,6 +38,7 @@ describe("User page", () => {
     expect(userPage).toBeInTheDocument();
     expect(firstUserLink).toHaveClass("active");
   });
+
   it("should rout to new user page", async () => {
     setupUsersHandlers();
 
@@ -57,6 +58,7 @@ describe("User page", () => {
 
     expect(newUserPageTitle).toBeInTheDocument();
   });
+
   it("should rout to edit user page", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -77,6 +79,7 @@ describe("User page", () => {
 
     expect(editUserTitle).toBeInTheDocument();
   });
+
   it("should rout to posts page", async () => {
     setupPostsHandlers();
     setupUsersHandlers();
@@ -98,6 +101,7 @@ describe("User page", () => {
 
     expect(postsPageTitle).toBeInTheDocument();
   });
+
   it("should choose favorite user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);

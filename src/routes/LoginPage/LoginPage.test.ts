@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { userMock } from "tests/moks";
+import { emptyDataMock, userMock } from "tests/moks";
 import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
 import { setupUserLoginHandlers, setupUsersHandlers } from "tests/mswHandlers";
 import { PATHS } from "../../constants";
@@ -105,14 +105,14 @@ describe("Login page", () => {
   });
 
   it("should show 'not found' error", async () => {
-    const nonExistentEmail = "test@email.com";
-    setupUserLoginHandlers([]);
+    setupUserLoginHandlers(emptyDataMock);
 
     const { getByPlaceholderText, getByTestId } = renderWithRouterAndProvider(
       undefined,
       { initialEntries: [PATHS.LOGIN] }
     );
-
+    window.alert = jest.fn();
+    const nonExistentEmail = "test@email.com";
     const emailInput = getByPlaceholderText(/example@.com/i);
     const loginButton = getByTestId("loginButton");
 
@@ -121,9 +121,6 @@ describe("Login page", () => {
 
     userEvent.type(emailInput, nonExistentEmail);
     expect(emailInput).toHaveValue(nonExistentEmail);
-
-    window.alert = jest.fn();
-
     userEvent.click(loginButton);
 
     await waitFor(() => expect(window.alert).toBeCalledTimes(1));

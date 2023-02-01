@@ -106,6 +106,7 @@ describe("User actions page", () => {
     expect(lastUser).toHaveClass("active");
     expect(lastUser).toHaveTextContent(newUserMock.name);
   });
+
   it("should edit user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -189,6 +190,7 @@ describe("User actions page", () => {
     expect(editedFirstUser).toHaveTextContent(editedUserMock.name);
     expect(userPage).toBeInTheDocument();
   });
+
   it("should delete user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -216,6 +218,7 @@ describe("User actions page", () => {
     expect(usersPageTitle).toBeInTheDocument();
     expect(usersList).toHaveLength(restUsers.length);
   });
+
   it("should rout back", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);

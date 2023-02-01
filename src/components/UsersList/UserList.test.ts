@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { getAllByTestId, waitFor } from "@testing-library/react";
 
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
-import { authContextStateMock, usersMock } from "tests/moks";
+import { authContextStateMock, emptyDataMock, usersMock } from "tests/moks";
 import { setupUsersHandlers } from "tests/mswHandlers";
 import { PATHS } from "../../constants";
 
@@ -10,7 +10,7 @@ import "tests/setupTests";
 
 describe("Users list component", () => {
   it("should render list with users", async () => {
-    setupUsersHandlers();
+    setupUsersHandlers(usersMock);
 
     const { getAllByTestId, getByText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
@@ -24,8 +24,9 @@ describe("Users list component", () => {
     expect(usersList).toHaveLength(usersMock.length);
     expect(firstUserElement).toBeInTheDocument();
   });
+
   it("should render list without users", async () => {
-    setupUsersHandlers([]);
+    setupUsersHandlers(emptyDataMock);
 
     const { getByText, queryAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
@@ -35,7 +36,7 @@ describe("Users list component", () => {
     const usersList = await waitFor(() => queryAllByTestId("userItem"));
     const emptyListText = await waitFor(() => getByText(/no contacts/i));
 
-    expect(usersList).toHaveLength(0);
+    expect(usersList).toHaveLength(emptyDataMock.length);
     expect(emptyListText).toBeInTheDocument();
   });
 });

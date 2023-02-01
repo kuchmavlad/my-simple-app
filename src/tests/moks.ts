@@ -222,6 +222,7 @@ export const newUserMock = {
   id: 999,
 };
 export const updatedUsersMock = [...usersMock, newUserMock];
+export const filteredUsersMock = [userMock];
 export const favoriteUsersMock = [favoriteUser, ...usersMock];
 export const editedUserMock = { ...newUserMock, id: 1 };
 export const [, ...restUsers] = usersMock;
@@ -260,7 +261,7 @@ export const postsMock = [
     body: "repudiandae veniam quaerat sunt sed alias aut fugiat sit autem sed est voluptatem omnis possimus esse voluptatibus quis est aut tenetur dolor neque",
   },
 ];
-export const postsEmptyMock = [];
+export const [postMock] = postsMock;
 export const postsLimitedMock = [
   {
     userId: 1,
@@ -368,3 +369,5 @@ export const authContextStateMock = {
   signIn: jest.fn(),
   signOut: jest.fn(),
 };
+
+export const emptyDataMock = [];

@@ -3,10 +3,15 @@ import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
+  authContextStateMock,
+  commentsMock,
+  emptyDataMock,
+  postMock,
+} from "tests/moks";
+import {
   renderWithRouter,
   renderWithRouterAndCustomProviderState,
 } from "tests/utils";
-import { authContextStateMock, commentsMock, postsMock } from "tests/moks";
 import {
   setupPostCommentsHandlers,
   setupPostHandlers,
@@ -16,7 +21,8 @@ import "tests/setupTests";
 
 describe("Single post page", () => {
   it("should render single post page with comments", async () => {
-    const { id: mockPostId, title: mockPostTitle } = postsMock[0];
+    const { id: mockPostId, title: mockPostTitle } = postMock;
+
     setupPostHandlers(mockPostId);
     setupPostCommentsHandlers();
 
@@ -32,9 +38,10 @@ describe("Single post page", () => {
   });
 
   it("should render single post page without comments", async () => {
-    const { id: mockPostId, title: mockPostTitle } = postsMock[0];
+    const { id: mockPostId, title: mockPostTitle } = postMock;
+
     setupPostHandlers(mockPostId);
-    setupPostCommentsHandlers([]);
+    setupPostCommentsHandlers(emptyDataMock);
 
     const { getByText, queryAllByTestId } = renderWithRouter(undefined, {
       initialEntries: [`/post/${mockPostId}`],
@@ -46,11 +53,12 @@ describe("Single post page", () => {
 
     expect(postTitle).toBeInTheDocument();
     expect(emptyCommentsText).toBeInTheDocument();
-    expect(comments).toHaveLength(0);
+    expect(comments).toHaveLength(emptyDataMock.length);
   });
 
   it("should have edit/delete button", async () => {
-    const { id: mockPostId, title: mockPostTitle } = postsMock[0];
+    const { id: mockPostId, title: mockPostTitle } = postMock;
+
     setupPostHandlers(mockPostId);
     setupPostCommentsHandlers();
 
@@ -72,7 +80,8 @@ describe("Single post page", () => {
   });
 
   it("should rout to edit post page", async () => {
-    const { id: mockPostId } = postsMock[0];
+    const { id: mockPostId } = postMock;
+
     setupPostHandlers(mockPostId);
     setupPostCommentsHandlers();
 
