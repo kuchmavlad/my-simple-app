@@ -119,8 +119,7 @@ describe("User actions page", () => {
 
     const newUserPageTitle = await waitFor(() => getByText(/user edit/i));
     const saveButton = await waitFor(() => getByText("Save"));
-    const usersList = await waitFor(() => getAllByTestId("userItem"));
-    const [firstUser] = usersList;
+    const [firstUser] = await waitFor(() => getAllByTestId("userItem"));
 
     expect(newUserPageTitle).toBeInTheDocument();
     expect(saveButton).toBeInTheDocument();
@@ -183,8 +182,7 @@ describe("User actions page", () => {
     userEvent.click(saveButton);
 
     const userPage = await waitFor(() => getByTestId("userPage"));
-    const usersListUpdated = await waitFor(() => getAllByTestId("userItem"));
-    const [editedFirstUser] = usersListUpdated;
+    const [editedFirstUser] = await waitFor(() => getAllByTestId("userItem"));
 
     expect(editedFirstUser).toHaveClass("active");
     expect(editedFirstUser).toHaveTextContent(editedUserMock.name);

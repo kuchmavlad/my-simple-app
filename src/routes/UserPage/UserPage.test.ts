@@ -113,8 +113,7 @@ describe("User page", () => {
       });
 
     const favoriteButton = await waitFor(() => getByTestId("favorite"));
-    const usersList = await waitFor(() => getAllByTestId("userItem"));
-    const [firstUser] = usersList;
+    const [firstUser] = await waitFor(() => getAllByTestId("userItem"));
     const firstUserIcon = firstUser.lastElementChild;
 
     expect(firstUserIcon).not.toBeInTheDocument();
@@ -135,9 +134,8 @@ describe("User page", () => {
       }
     );
 
-    const rerenderUsersList = await waitFor(() => getAllByTestId("userItem"));
+    const [rerenderFirstUser] = await waitFor(() => getAllByTestId("userItem"));
     const rerenderFavoriteButton = await waitFor(() => getByTestId("favorite"));
-    const [rerenderFirstUser] = rerenderUsersList;
     const rerenderFirstUserIcon = rerenderFirstUser.lastElementChild;
 
     expect(rerenderFirstUserIcon).toBeInTheDocument();

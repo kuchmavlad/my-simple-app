@@ -61,7 +61,9 @@ describe("Posts page", () => {
       initialEntries: [`/${PATHS.POSTS}`],
     });
 
+    const posts = await waitFor(() => getAllByTestId("postItem"));
     const checkbox = await findByRole("checkbox");
+    expect(posts).toHaveLength(postsMock.length);
     expect(checkbox).not.toBeChecked();
 
     await waitFor(() => {
@@ -69,10 +71,10 @@ describe("Posts page", () => {
 
       expect(checkbox).toBeChecked();
 
-      const posts = getAllByTestId("postItem");
-      const [firstPost] = posts;
+      const postsUpdated = getAllByTestId("postItem");
+      const [firstPost] = postsUpdated;
 
-      expect(posts).toHaveLength(postsLimitedMock.length);
+      expect(postsUpdated).toHaveLength(postsLimitedMock.length);
       expect(firstPost).toHaveAttribute(
         "href",
         `/post/${postsLimitedMock[0].id}`
