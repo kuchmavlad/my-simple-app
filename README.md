@@ -54,10 +54,8 @@ Get all users.
 * Can check you posts
 
 ## Tests
-In developing
 
 ```
-$ npm run server
 $ npm test
 ```
 
@@ -65,4 +63,3 @@ Launches the test runner in the interactive watch mode.
 
 ## Features
 * Albums page
-* Tests
