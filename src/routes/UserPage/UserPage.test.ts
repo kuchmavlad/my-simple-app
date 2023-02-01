@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { PATHS } from "../../constants";
 import {
   setupPostsHandlers,
   setupUserFavoriteHandlers,
@@ -28,7 +29,7 @@ describe("User page", () => {
 
     const { getAllByTestId, getByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const [firstUserLink] = await waitFor(() => getAllByTestId("userItem"));
@@ -37,6 +38,7 @@ describe("User page", () => {
     expect(userPage).toBeInTheDocument();
     expect(firstUserLink).toHaveClass("active");
   });
+
   it("should rout to new user page", async () => {
     setupUsersHandlers();
 
@@ -44,7 +46,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       }
     );
 
@@ -56,6 +58,7 @@ describe("User page", () => {
 
     expect(newUserPageTitle).toBeInTheDocument();
   });
+
   it("should rout to edit user page", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -64,7 +67,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
@@ -76,6 +79,7 @@ describe("User page", () => {
 
     expect(editUserTitle).toBeInTheDocument();
   });
+
   it("should rout to posts page", async () => {
     setupPostsHandlers();
     setupUsersHandlers();
@@ -85,7 +89,7 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
@@ -97,6 +101,7 @@ describe("User page", () => {
 
     expect(postsPageTitle).toBeInTheDocument();
   });
+
   it("should choose favorite user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -104,12 +109,11 @@ describe("User page", () => {
 
     const { getAllByTestId, getByTestId, rerender } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const favoriteButton = await waitFor(() => getByTestId("favorite"));
-    const usersList = await waitFor(() => getAllByTestId("userItem"));
-    const [firstUser] = usersList;
+    const [firstUser] = await waitFor(() => getAllByTestId("userItem"));
     const firstUserIcon = firstUser.lastElementChild;
 
     expect(firstUserIcon).not.toBeInTheDocument();
@@ -126,13 +130,12 @@ describe("User page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       }
     );
 
-    const rerenderUsersList = await waitFor(() => getAllByTestId("userItem"));
+    const [rerenderFirstUser] = await waitFor(() => getAllByTestId("userItem"));
     const rerenderFavoriteButton = await waitFor(() => getByTestId("favorite"));
-    const [rerenderFirstUser] = rerenderUsersList;
     const rerenderFirstUserIcon = rerenderFirstUser.lastElementChild;
 
     expect(rerenderFirstUserIcon).toBeInTheDocument();

@@ -5,6 +5,7 @@ import {
   commentsMock,
   editedUserMock,
   favoriteUser,
+  filteredUsersMock,
   newUserMock,
   postsLimitedMock,
   postsMock,
@@ -77,7 +78,7 @@ export const setupPostCommentsHandlers = (customMock?: CommentType[]) => {
 export const setupUserLoginHandlers = (customMock?: UserItem[]) => {
   server.use(
     rest.get(ENDPOINT_PATH.USERS, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(customMock ?? [userMock]));
+      return res(ctx.status(200), ctx.json(customMock ?? filteredUsersMock));
     })
   );
 };
@@ -121,7 +122,7 @@ export const setupUsersHandlers = (customMock?: UserItem[]) => {
       const q = req.url.searchParams.get("q");
       return res(
         ctx.status(200),
-        ctx.json(customMock ? customMock : q ? [userMock] : usersMock)
+        ctx.json(customMock ? customMock : q ? filteredUsersMock : usersMock)
       );
     })
   );

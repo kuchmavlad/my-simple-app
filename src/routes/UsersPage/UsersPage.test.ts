@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
 import { authContextStateMock, userMock } from "tests/moks";
 import { setupUserHandlers, setupUsersHandlers } from "tests/mswHandlers";
+import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
@@ -16,7 +17,7 @@ describe("Users page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       }
     );
 
@@ -34,7 +35,7 @@ describe("Users page", () => {
 
     const { getAllByTestId, getByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const [firstUserLink] = await waitFor(() => getAllByTestId("userItem"));

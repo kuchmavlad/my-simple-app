@@ -2,8 +2,9 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { authContextStateMock, postsMock } from "tests/moks";
+import { authContextStateMock, postMock, postsMock } from "tests/moks";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { PATHS } from "../../constants";
 import {
   setupPostDeleteHandlers,
   setupPostEditHandlers,
@@ -17,15 +18,20 @@ import "tests/setupTests";
 
 describe("Post Actions Page", () => {
   it("should edit post", async () => {
-    const { id: mockPostId, title: mockPostTitle, body } = postsMock[0];
+    const {
+      id: mockPostId,
+      title: mockPostTitle,
+      body: mockPostBody,
+    } = postMock;
     const { id: userId } = authContextStateMock.user;
-    setupPostsHandlers();
+
+    setupPostsHandlers(postsMock);
     setupPostHandlers(mockPostId);
     setupPostEditHandlers(mockPostId);
 
     const { getByText, getByPlaceholderText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/post/${userId}/${mockPostId}/edit`],
+        initialEntries: [`/post/${userId}/${mockPostId}/${PATHS.EDIT}`],
       });
 
     const postEditTitle = await waitFor(() => getByText(/edit post/i));
@@ -37,7 +43,7 @@ describe("Post Actions Page", () => {
     expect(titleInput).toBeInTheDocument();
     expect(bodyInput).toBeInTheDocument();
     expect(titleInput).toHaveValue(mockPostTitle);
-    expect(bodyInput).toHaveValue(body);
+    expect(bodyInput).toHaveValue(mockPostBody);
     expect(titleInput).toBeRequired();
     expect(bodyInput).toBeRequired();
 
@@ -54,13 +60,15 @@ describe("Post Actions Page", () => {
 
     const { getByText, getByPlaceholderText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/post/new"],
+        initialEntries: [`/${PATHS.POST_NEW}`],
       });
 
     const postNewTitle = getByText(/new post/i);
     const saveButton = getByText(/save/i);
     const titleInput = getByPlaceholderText(/title/i);
     const bodyInput = getByPlaceholderText(/description/i);
+    const titleText = "titleText";
+    const bodyText = "bodyText";
 
     expect(postNewTitle).toBeInTheDocument();
     expect(titleInput).toBeInTheDocument();
@@ -70,11 +78,8 @@ describe("Post Actions Page", () => {
     expect(titleInput).toBeRequired();
     expect(bodyInput).toBeRequired();
 
-    const titleText = "titleText";
-    const bodyText = "bodyText";
-
-    userEvent.type(titleInput, "titleText");
-    userEvent.type(bodyInput, "bodyText");
+    userEvent.type(titleInput, titleText);
+    userEvent.type(bodyInput, bodyText);
 
     expect(titleInput).toHaveValue(titleText);
     expect(bodyInput).toHaveValue(bodyText);
@@ -93,7 +98,7 @@ describe("Post Actions Page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/posts", "/post/new"],
+        initialEntries: [`/${PATHS.POSTS}`, `/${PATHS.POST_NEW}`],
       }
     );
 
@@ -111,7 +116,8 @@ describe("Post Actions Page", () => {
   });
 
   it("shouldn't delete post after cancellation", async () => {
-    const { id: mockPostId } = postsMock[0];
+    const { id: mockPostId } = postMock;
+
     setupPostHandlers(mockPostId);
     setupPostsHandlers();
     setupPostCommentsHandlers();
@@ -124,10 +130,10 @@ describe("Post Actions Page", () => {
       }
     );
 
+    window.confirm = jest.fn(() => false);
     const deleteButton = await waitFor(() => getByText("Delete"));
 
     expect(deleteButton).toBeInTheDocument();
-    window.confirm = jest.fn(() => false);
 
     userEvent.click(deleteButton);
 
@@ -136,7 +142,8 @@ describe("Post Actions Page", () => {
   });
 
   it("should delete post after confirmation", async () => {
-    const { id: mockPostId } = postsMock[0];
+    const { id: mockPostId } = postMock;
+
     setupPostHandlers(mockPostId);
     setupPostsHandlers();
     setupPostCommentsHandlers();
@@ -150,11 +157,10 @@ describe("Post Actions Page", () => {
       }
     );
 
+    window.confirm = jest.fn(() => true);
     const deleteButton = await waitFor(() => getByText("Delete"));
 
     expect(deleteButton).toBeInTheDocument();
-
-    window.confirm = jest.fn(() => true);
 
     userEvent.click(deleteButton);
 

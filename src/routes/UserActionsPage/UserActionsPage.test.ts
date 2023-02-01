@@ -3,6 +3,7 @@ import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { PATHS } from "../../constants";
 import {
   setupEditedUserHandlers,
   setupUserDeleteHandlers,
@@ -31,7 +32,7 @@ describe("User actions page", () => {
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${newUserMock.id}/new`],
+        initialEntries: [`/users/${newUserMock.id}/${PATHS.NEW}`],
       });
 
     const newUserPageTitle = await waitFor(() => getByText(/user new/i));
@@ -105,6 +106,7 @@ describe("User actions page", () => {
     expect(lastUser).toHaveClass("active");
     expect(lastUser).toHaveTextContent(newUserMock.name);
   });
+
   it("should edit user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -112,13 +114,12 @@ describe("User actions page", () => {
 
     const { getByText, getByPlaceholderText, getByTestId, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}/edit`],
+        initialEntries: [`/users/${userMock.id}/${PATHS.EDIT}`],
       });
 
     const newUserPageTitle = await waitFor(() => getByText(/user edit/i));
     const saveButton = await waitFor(() => getByText("Save"));
-    const usersList = await waitFor(() => getAllByTestId("userItem"));
-    const [firstUser] = usersList;
+    const [firstUser] = await waitFor(() => getAllByTestId("userItem"));
 
     expect(newUserPageTitle).toBeInTheDocument();
     expect(saveButton).toBeInTheDocument();
@@ -181,13 +182,13 @@ describe("User actions page", () => {
     userEvent.click(saveButton);
 
     const userPage = await waitFor(() => getByTestId("userPage"));
-    const usersListUpdated = await waitFor(() => getAllByTestId("userItem"));
-    const [editedFirstUser] = usersListUpdated;
+    const [editedFirstUser] = await waitFor(() => getAllByTestId("userItem"));
 
     expect(editedFirstUser).toHaveClass("active");
     expect(editedFirstUser).toHaveTextContent(editedUserMock.name);
     expect(userPage).toBeInTheDocument();
   });
+
   it("should delete user", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -196,7 +197,7 @@ describe("User actions page", () => {
     window.confirm = jest.fn(() => true);
     const { getByText, getAllByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: [`/users/${userMock.id}`],
+        initialEntries: [`/${PATHS.USERS}/${userMock.id}`],
       });
 
     const deleteButton = await waitFor(() => getByText("Delete"));
@@ -215,6 +216,7 @@ describe("User actions page", () => {
     expect(usersPageTitle).toBeInTheDocument();
     expect(usersList).toHaveLength(restUsers.length);
   });
+
   it("should rout back", async () => {
     setupUsersHandlers();
     setupUserHandlers(userMock.id);
@@ -223,7 +225,10 @@ describe("User actions page", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: [`/users/${userMock.id}`, `/users/${userMock.id}/edit`],
+        initialEntries: [
+          `/${PATHS.USERS}/${userMock.id}`,
+          `/${PATHS.USERS}/${userMock.id}/${PATHS.EDIT}`,
+        ],
       }
     );
 

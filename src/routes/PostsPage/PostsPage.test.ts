@@ -2,13 +2,15 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { PATHS } from "../../constants";
 import {
   renderWithRouter,
   renderWithRouterAndCustomProviderState,
 } from "tests/utils";
 import {
   authContextStateMock,
-  postsEmptyMock,
+  emptyDataMock,
+  postMock,
   postsLimitedMock,
   postsMock,
 } from "tests/moks";
@@ -17,12 +19,13 @@ import {
   setupPostHandlers,
   setupPostCommentsHandlers,
 } from "tests/mswHandlers";
-import { PATHS } from "../../constants";
 
 import "tests/setupTests";
 
 describe("Posts page", () => {
   it("should render posts page with posts", async () => {
+    const { id: mockPostId, title: mockPostTitle } = postMock;
+
     setupPostsHandlers();
 
     const { getAllByTestId } = renderWithRouter(undefined, {
@@ -30,14 +33,15 @@ describe("Posts page", () => {
     });
 
     const posts = await waitFor(() => getAllByTestId("postItem"));
+    const [firstPost] = posts;
 
     expect(posts).toHaveLength(postsMock.length);
-    expect(posts[0]).toHaveTextContent(postsMock[0].title);
-    expect(posts[0]).toHaveAttribute("href", `/post/${postsMock[0].id}`);
+    expect(firstPost).toHaveTextContent(mockPostTitle);
+    expect(firstPost).toHaveAttribute("href", `/post/${mockPostId}`);
   });
 
   it("should render posts page without posts", async () => {
-    setupPostsHandlers([]);
+    setupPostsHandlers(emptyDataMock);
 
     const { queryAllByTestId, getByText } = renderWithRouter(undefined, {
       initialEntries: [`/${PATHS.POSTS}`],
@@ -46,7 +50,7 @@ describe("Posts page", () => {
     const posts = await waitFor(() => queryAllByTestId("postItem"));
     const emptyMassage = await waitFor(() => getByText(/no posts/i));
 
-    expect(posts).toHaveLength(postsEmptyMock.length);
+    expect(posts).toHaveLength(emptyDataMock.length);
     expect(emptyMassage).toBeInTheDocument();
   });
 
@@ -57,7 +61,9 @@ describe("Posts page", () => {
       initialEntries: [`/${PATHS.POSTS}`],
     });
 
+    const posts = await waitFor(() => getAllByTestId("postItem"));
     const checkbox = await findByRole("checkbox");
+    expect(posts).toHaveLength(postsMock.length);
     expect(checkbox).not.toBeChecked();
 
     await waitFor(() => {
@@ -65,9 +71,11 @@ describe("Posts page", () => {
 
       expect(checkbox).toBeChecked();
 
-      const posts = getAllByTestId("postItem");
-      expect(posts).toHaveLength(postsLimitedMock.length);
-      expect(posts[0]).toHaveAttribute(
+      const postsUpdated = getAllByTestId("postItem");
+      const [firstPost] = postsUpdated;
+
+      expect(postsUpdated).toHaveLength(postsLimitedMock.length);
+      expect(firstPost).toHaveAttribute(
         "href",
         `/post/${postsLimitedMock[0].id}`
       );
@@ -111,8 +119,14 @@ describe("Posts page", () => {
   });
 
   it("should rout to single post page", async () => {
+    const {
+      id: mockPostId,
+      title: mockPostTitle,
+      body: mockPostBody,
+    } = postMock;
+
     setupPostsHandlers();
-    setupPostHandlers(postsMock[0].id);
+    setupPostHandlers(mockPostId);
     setupPostCommentsHandlers();
 
     const { getAllByTestId, getByText } = renderWithRouter(undefined, {
@@ -120,15 +134,18 @@ describe("Posts page", () => {
     });
 
     const posts = await waitFor(() => getAllByTestId("postItem"));
+    const [firstPost] = posts;
 
     expect(posts).toHaveLength(postsMock.length);
 
-    userEvent.click(posts[0]);
+    userEvent.click(firstPost);
 
     const commentsTitle = await waitFor(() => getByText(/comments/i));
-    const postBodyText = await waitFor(() => getByText(postsMock[0].body));
+    const postBodyText = await waitFor(() => getByText(mockPostBody));
+    const postTitleText = await waitFor(() => getByText(mockPostTitle));
 
     expect(commentsTitle).toBeInTheDocument();
     expect(postBodyText).toBeInTheDocument();
+    expect(postTitleText).toBeInTheDocument();
   });
 });

@@ -2,9 +2,15 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 
+import { PATHS } from "../../constants";
 import { setupUsersHandlers } from "tests/mswHandlers";
 import { renderWithRouterAndCustomProviderState } from "tests/utils";
-import { authContextStateMock, usersMock, userMock } from "tests/moks";
+import {
+  authContextStateMock,
+  usersMock,
+  filteredUsersMock,
+  emptyDataMock,
+} from "tests/moks";
 
 import "tests/setupTests";
 
@@ -16,7 +22,7 @@ describe("User search component", () => {
       authContextStateMock,
       undefined,
       {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       }
     );
 
@@ -24,12 +30,13 @@ describe("User search component", () => {
 
     expect(searchInput).toBeInTheDocument();
   });
+
   it("should return filtered users", async () => {
     setupUsersHandlers();
 
     const { queryAllByTestId, getByPlaceholderText, getByTestId } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const searchInput = await waitFor(() => getByPlaceholderText("Search"));
@@ -37,7 +44,7 @@ describe("User search component", () => {
 
     expect(usersList).toHaveLength(usersMock.length);
 
-    setupUsersHandlers([userMock]);
+    setupUsersHandlers(filteredUsersMock);
 
     userEvent.type(searchInput, "1");
     expect(searchInput).toHaveValue("1");
@@ -46,14 +53,15 @@ describe("User search component", () => {
     await waitForElementToBeRemoved(spinner);
 
     const usersListUpdated = await waitFor(() => queryAllByTestId("userItem"));
-    expect(usersListUpdated).toHaveLength(1);
+    expect(usersListUpdated).toHaveLength(filteredUsersMock.length);
   });
+
   it("should return filtered empty users", async () => {
     setupUsersHandlers();
 
     const { queryAllByTestId, getByPlaceholderText, getByText } =
       renderWithRouterAndCustomProviderState(authContextStateMock, undefined, {
-        initialEntries: ["/users"],
+        initialEntries: [`/${PATHS.USERS}`],
       });
 
     const searchInput = await waitFor(() => getByPlaceholderText("Search"));
@@ -61,7 +69,7 @@ describe("User search component", () => {
 
     expect(usersList).toHaveLength(usersMock.length);
 
-    setupUsersHandlers([]);
+    setupUsersHandlers(emptyDataMock);
 
     userEvent.type(searchInput, "1");
 
@@ -70,7 +78,7 @@ describe("User search component", () => {
     const emptyListText = await waitFor(() => getByText(/no contacts/i));
     const usersListUpdated = await waitFor(() => queryAllByTestId("userItem"));
 
-    expect(usersListUpdated).toHaveLength(0);
+    expect(usersListUpdated).toHaveLength(emptyDataMock.length);
     expect(emptyListText).toBeInTheDocument();
   });
 });
