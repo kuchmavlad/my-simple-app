@@ -3,16 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { PATHS } from "../../constants";
-import { setupUsersHandlers } from "tests/mswHandlers";
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { setupUsersHandlers } from "tests/unit/mswHandlers";
+import { renderWithRouterAndCustomProviderState } from "tests/unit/utils";
 import {
   authContextStateMock,
   usersMock,
   filteredUsersMock,
   emptyDataMock,
-} from "tests/moks";
+} from "tests/unit/moks";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("User search component", () => {
   it("should render component", async () => {

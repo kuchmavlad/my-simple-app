@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouter } from "tests/utils";
+import { renderWithRouter } from "tests/unit/utils";
 
 describe("Error page", () => {
   it("should render error page", () => {

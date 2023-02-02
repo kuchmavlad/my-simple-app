@@ -2,12 +2,12 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
-import { authContextStateMock, userMock } from "tests/moks";
-import { setupUserHandlers, setupUsersHandlers } from "tests/mswHandlers";
+import { renderWithRouterAndCustomProviderState } from "tests/unit/utils";
+import { authContextStateMock, userMock } from "tests/unit/moks";
+import { setupUserHandlers, setupUsersHandlers } from "tests/unit/mswHandlers";
 import { PATHS } from "../../constants";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Users page", () => {
   it("should render users page with authorize", async () => {

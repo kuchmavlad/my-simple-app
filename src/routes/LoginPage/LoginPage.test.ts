@@ -2,12 +2,18 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { emptyDataMock, userMock } from "tests/moks";
-import { renderWithRouter, renderWithRouterAndProvider } from "tests/utils";
-import { setupUserLoginHandlers, setupUsersHandlers } from "tests/mswHandlers";
+import { emptyDataMock, userMock } from "tests/unit/moks";
+import {
+  renderWithRouter,
+  renderWithRouterAndProvider,
+} from "tests/unit/utils";
+import {
+  setupUserLoginHandlers,
+  setupUsersHandlers,
+} from "tests/unit/mswHandlers";
 import { PATHS } from "../../constants";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Login page", () => {
   it("should render login page", () => {
@@ -112,7 +118,7 @@ describe("Login page", () => {
       { initialEntries: [PATHS.LOGIN] }
     );
     window.alert = jest.fn();
-    const nonExistentEmail = "test@email.com";
+    const nonExistentEmail = "e2e@email.com";
     const emailInput = getByPlaceholderText(/example@.com/i);
     const loginButton = getByTestId("loginButton");
 

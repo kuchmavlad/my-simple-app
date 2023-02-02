@@ -8,19 +8,19 @@ import {
   setupUserFavoriteHandlers,
   setupUserHandlers,
   setupUsersHandlers,
-} from "tests/mswHandlers";
+} from "tests/unit/mswHandlers";
 import {
   renderWithRouterAndCustomProviderState,
   rerenderWithRouterAndCustomProviderState,
-} from "tests/utils";
+} from "tests/unit/utils";
 import {
   authContextStateMock,
   favoriteUser,
   favoriteUsersMock,
   userMock,
-} from "tests/moks";
+} from "tests/unit/moks";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("User page", () => {
   it("should render user page", async () => {

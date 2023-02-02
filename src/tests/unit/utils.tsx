@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { render } from "@testing-library/react";
 
-import { AuthContext, AuthProvider } from "../hoc/AuthProvider";
+import { AuthContext, AuthProvider } from "../../hoc/AuthProvider";
 import { routesConfig } from "utils";
 import { AuthInitialStateProps, MemoryRoutOptionsType } from "dtos";
 
