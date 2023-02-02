@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { renderWithRouterAndCustomProviderState } from "tests/unit/utils";
 import { PATHS } from "../../constants";
 import {
   setupEditedUserHandlers,
@@ -10,7 +10,7 @@ import {
   setupUserHandlers,
   setupUsersHandlers,
   setupUsersPostHandlers,
-} from "tests/mswHandlers";
+} from "tests/unit/mswHandlers";
 import {
   authContextStateMock,
   editedUserMock,
@@ -20,9 +20,9 @@ import {
   updatedUsersMock,
   userMock,
   usersMock,
-} from "tests/moks";
+} from "tests/unit/moks";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("User actions page", () => {
   it("should create new user", async () => {

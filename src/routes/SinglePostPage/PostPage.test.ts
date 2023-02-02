@@ -7,17 +7,17 @@ import {
   commentsMock,
   emptyDataMock,
   postMock,
-} from "tests/moks";
+} from "tests/unit/moks";
 import {
   renderWithRouter,
   renderWithRouterAndCustomProviderState,
-} from "tests/utils";
+} from "tests/unit/utils";
 import {
   setupPostCommentsHandlers,
   setupPostHandlers,
-} from "tests/mswHandlers";
+} from "tests/unit/mswHandlers";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Single post page", () => {
   it("should render single post page with comments", async () => {

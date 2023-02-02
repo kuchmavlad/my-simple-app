@@ -1,12 +1,16 @@
 import "@testing-library/jest-dom";
 import { getAllByTestId, waitFor } from "@testing-library/react";
 
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
-import { authContextStateMock, emptyDataMock, usersMock } from "tests/moks";
-import { setupUsersHandlers } from "tests/mswHandlers";
+import { renderWithRouterAndCustomProviderState } from "tests/unit/utils";
+import {
+  authContextStateMock,
+  emptyDataMock,
+  usersMock,
+} from "tests/unit/moks";
+import { setupUsersHandlers } from "tests/unit/mswHandlers";
 import { PATHS } from "../../constants";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Users list component", () => {
   it("should render list with users", async () => {

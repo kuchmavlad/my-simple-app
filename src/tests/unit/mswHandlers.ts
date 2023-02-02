@@ -13,8 +13,8 @@ import {
   usersMock,
 } from "./moks";
 
-import { ENDPOINT_PATH } from "../constants";
-import { CommentType, PostsItem, UserItem } from "../dtos";
+import { ENDPOINT_PATH } from "../../constants";
+import { CommentType, PostsItem, UserItem } from "../../dtos";
 
 // Posts Handlers
 export const setupPostsHandlers = (customMock?: PostsItem[]) => {

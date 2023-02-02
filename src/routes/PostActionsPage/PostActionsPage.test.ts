@@ -2,8 +2,8 @@ import "@testing-library/jest-dom";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { authContextStateMock, postMock, postsMock } from "tests/moks";
-import { renderWithRouterAndCustomProviderState } from "tests/utils";
+import { authContextStateMock, postMock, postsMock } from "tests/unit/moks";
+import { renderWithRouterAndCustomProviderState } from "tests/unit/utils";
 import { PATHS } from "../../constants";
 import {
   setupPostDeleteHandlers,
@@ -12,9 +12,9 @@ import {
   setupPostHandlers,
   setupPostCommentsHandlers,
   setupPostsHandlers,
-} from "tests/mswHandlers";
+} from "tests/unit/mswHandlers";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Post Actions Page", () => {
   it("should edit post", async () => {

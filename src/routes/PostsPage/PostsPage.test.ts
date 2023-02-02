@@ -6,21 +6,21 @@ import { PATHS } from "../../constants";
 import {
   renderWithRouter,
   renderWithRouterAndCustomProviderState,
-} from "tests/utils";
+} from "tests/unit/utils";
 import {
   authContextStateMock,
   emptyDataMock,
   postMock,
   postsLimitedMock,
   postsMock,
-} from "tests/moks";
+} from "tests/unit/moks";
 import {
   setupPostsHandlers,
   setupPostHandlers,
   setupPostCommentsHandlers,
-} from "tests/mswHandlers";
+} from "tests/unit/mswHandlers";
 
-import "tests/setupTests";
+import "tests/unit/setupTests";
 
 describe("Posts page", () => {
   it("should render posts page with posts", async () => {
